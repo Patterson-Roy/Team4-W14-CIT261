@@ -1,0 +1,71 @@
+<html>
+<head>
+
+</head>
+<body>
+
+<form id="nameForm">
+    <label>Name:<input name="name" /></label>
+    <label>Age:<input name="age" /></label>
+    <a href="#" id="submitLink">Save</a>
+</form>
+
+
+
+
+<div id="output"></div><a href="#" id="getLink">Get from Firebase</a> <a href="#" id="delLink">Delete from Firebase</a>
+
+<script>
+    var putToFirebase = function(event){
+        event.preventDefault();
+        var person = {};
+        person.name = document.getElementById("nameForm").name.value;
+        person.age = document.getElementById("nameForm").age.value;
+        person.time = new Date();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", "https://brilliant-fire-7921.firebaseio.com/users/jack.json", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(person));
+    }
+
+    var getFromFirebase = function(event){
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        request.open("GET", "https://brilliant-fire-7921.firebaseio.com/users/jack.json");
+        request.send(null);
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 200) {
+                console.log(request.responseText)
+                var person = JSON.parse(request.responseText);
+                var output = document.getElementById("output");
+                output.textContent = person.name + " - " + person.age;
+            }
+        }
+    }
+
+    var deleteFromFirebase = function(event){
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        request.open("DELETE", "https://brilliant-fire-7921.firebaseio.com/users/jack.json");
+        request.send(null);
+        request.onreadystatechange = function() {
+            if (request.readyState == 4 && request.status == 204) {
+                var output = document.getElementById("output");
+                output.textContent = "";
+            }
+        }
+    }
+
+    var init = function(){
+        document.getElementById('submitLink').addEventListener('click',putToFirebase);
+        document.getElementById('getLink').addEventListener('click',getFromFirebase);
+        document.getElementById('delLink').addEventListener('click',deleteFromFirebase);
+    };
+    document.addEventListener("DOMContentLoaded", init);
+
+
+
+</script>
+</body>
+</html>
