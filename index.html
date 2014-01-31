@@ -6,15 +6,41 @@
         <script src="file-io.js"></script>
     </head>
     <body>
-        <input type="text" id="what-if" placeholder="what-if name" required><br/>
-        <input type="text" id="principal" placeholder="principal amount"><br/>
-        <input type="text" id="rate" placeholder="interest rate"><br/>
-        <a href="#" id="add-records">add record</a>
-        <a href="#" id="delete-records">delete record</a>
-        <a href="#" id="get-records">fetch record</a>
-        <a href="#" id="get-all-records">get all records</a>
-        <section id="output"></section>
-        <section id="output0"></section>
-        <section id="output1"></section>
+        <section>
+            <input type="text" id="what-if" placeholder="what-if name" required><br/>
+            <form id="loans" name="loan-calc">
+                <fieldset>
+                    <legend></legend>
+                    <label class="fieldlabel" for="principal">Principal:</label>
+                    <input type="text" id="principal" placeholder="principal amount" autofocus size="15"><br/>
+                    <label class="fieldlabel" for="rate">Interest Rate:</label>
+                    <input type="text" id="rate" placeholder="interest rate" size="8"><br/>
+                    <label class="fieldlabel" for="periods">Periods:</label>
+                    <input type="number" id="periods" placeholder="number of periods" size="8">
+                    <label for="period_type">for</label>
+                    <select name="period_id" id="period_type" class="field">
+                        <option value="mo">Month</option>
+                        <option value="qtr">Quarter</option>
+                        <option value="yr">Year</option>
+                    </select><br/>
+                    <label class="fieldlabel" for="payment">Payment:</label>
+                    <input type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
+                    <label class="fieldlabel" for="total">Loan Total:</label>
+                    <input type="text" id="total" size="15" disabled><br/>
+                    <label class="fieldlabel" for="interest-total">Interest Total:</label>
+                    <input type="text" id="interest-total" size="15" disabled><br/>
+                </fieldset>
+            </form>
+        </section>
+        <!-- This section is for the what-if scenario names -->
+        <section>
+            <a href="#" id="add-records">add record</a>
+            <a href="#" id="delete-records">delete record</a>
+            <a href="#" id="get-records">fetch record</a>
+            <a href="#" id="get-all-records">get all records</a>
+            <div id="output"></div>
+            <div id="output0"></div>
+            <div id="output1"></div>
+        </section>
     </body>
 </html>
