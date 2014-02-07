@@ -13,23 +13,28 @@
                 <fieldset>
                     <legend></legend>
                     <label class="fieldlabel" for="principal">Principal:</label>
-                    <input type="text" id="principal" placeholder="principal amount" autofocus size="15"><br/>
+                    <input class="field required" type="text" id="principal" placeholder="principal amount" autofocus size="15"><br/>
+                    
                     <label class="fieldlabel" for="rate">Interest Rate:</label>
-                    <input type="text" id="rate" placeholder="interest rate" size="8"><br/>
+                    <input class="field required" type="text" id="rate" placeholder="interest rate" size="8"><br/>
+                    
                     <label class="fieldlabel" for="periods">Periods:</label>
-                    <input type="number" id="periods" placeholder="number of periods">
+                    <input class="field required" type="number" id="periods" placeholder="number of periods">
                     <label for="period_type">for</label>
                     <select name="period_id" id="period_type" class="field">
                         <option value="mo">Month</option>
                         <option value="qtr">Quarter</option>
                         <option value="yr">Year</option>
                     </select><br/>
+                    
                     <label class="fieldlabel" for="payment">Payment:</label>
-                    <input type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
+                    <input class="field required" type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
+                    
                     <label class="fieldlabel" for="total">Loan Total:</label>
-                    <input type="text" id="total" size="15" disabled><br/>
+                    <input class="field" type="text" id="total" size="15" disabled><br/>
+                    
                     <label class="fieldlabel" for="interest-total">Interest Total:</label>
-                    <input type="text" id="interest-total" size="15" disabled><br/>
+                    <input class="field" type="text" id="interest-total" size="15" disabled><br/>
                 </fieldset>
             </form>
         </section>
