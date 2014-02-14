@@ -1,0 +1,53 @@
+label.fieldlabel{
+    text-align: right;
+    display: block;
+    width: 7em;
+    line-height: 1.2em;
+    float: left;
+    clear: left;
+    margin: 0 3px .5em 0;
+    color: black;
+    overflow: auto;
+}
+
+.field{
+    line-height: 1.2em;
+    color: black;
+    margin: 0 0 .5em 0;
+}
+
+.rnd-btn{
+    height: 2.2em;
+    width: 5em;
+    border-radius: 5px;
+    box-shadow: 3px 3px 9px darkgrey;
+    margin: 2px 0 0 3em;
+}
+
+.rnd-btn:hover{
+    opacity: 1.8;
+    -moz-opacity: 1.8;
+    cursor: pointer;
+}
+
+fieldset{
+    color: black;
+    border: 1px solid black;
+}
+
+.what-if{
+    float: right;
+    margin-right: 2em;
+}
+
+.inError{
+    background-color: red;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape){
+}
+
+/*  tablet portrait mode  for handheld devices*/
+@media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait){
+}
+
