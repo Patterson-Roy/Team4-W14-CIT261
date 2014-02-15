@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Nerd Herd Calculator</title>
+        <link href="main.css" type="text/css" rel="stylesheet" media="screen" />
+        <script src="file-io.js" type="text/javascript"></script>
+        <script src="utils.js" type="text/javascript"></script>
+        <script src="calculate.js" type="text/javascript"></script>
+        <script src="calculatepayment.js" type="text/javascript"></script>
+        <script src="calculateperiods.js" type="text/javascript"></script>
+        <script src="calculateprincipal.js" type="text/javascript"></script>
+        <script src="calculaterate.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <section>
+            <form id="loans" name="loan-calc">
+                <fieldset>
+                    <legend></legend>
+                    <label class="fieldlabel" for="loan-name">Scenario Name:</label>
+                    <input class="field required" type="text" id="loan-name" placeholder="Scenario Name"  size="15"><br/>
+                    
+                    <label class="fieldlabel" for="loan-type">Type of Loan:</label>
+                    <select name="loan-type" id="loan-type" class="field" autofocus>
+                        <option value="car">Car</option>
+                        <option value="home">Home</option>
+                        <option value="other">Other</option>
+                    </select><br/>
+                    
+                    <label class="fieldlabel" for="principal">Principal:</label>
+                    <input class="field required" type="text" id="principal" placeholder="principal amount" size="15"><br/>
+                    
+                    <label class="fieldlabel" for="rate">Interest Rate:</label>
+                    <input class="field required" type="text" id="rate" placeholder="interest rate" size="8"><br/>
+                    
+                    <label class="fieldlabel" for="periods">Periods:</label>
+                    <input class="field required" type="number" id="periods" placeholder="number of periods">
+                    <label for="period-type">for</label>
+                    <select name="period-id" id="period-type" class="field">
+                        <option value="mo">Month</option>
+                        <option value="qtr">Quarter</option>
+                        <option value="yr">Year</option>
+                    </select><br/>
+                    
+                    <label class="fieldlabel" for="payment">Payment:</label>
+                    <input class="field required" type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
+                    
+                    <label class="fieldlabel" for="total">Loan Total:</label>
+                    <input class="field" type="text" id="total" size="15" disabled><br/>
+                    
+                    <label class="fieldlabel" for="interest-total">Interest Total:</label>
+                    <input class="field" type="text" id="interest-total" size="15" disabled><br/>
+                    <button id="calculate">Go</button>
+                    <button id="new">New</button>
+                </fieldset>
+            </form>
+        </section>
+        <section>
+            <button id="add-records">Save</button>
+            <button id="delete-records">Delete</button>
+            <button id="get-records">Get</button>
+            <button id="get-all-records">Get All</button>
+        </section>
+        <!-- This section is for the what-if scenario names -->
+        <section id="out">
+        </section>
+    </body>
+</html>
