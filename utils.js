@@ -1,3 +1,24 @@
+var fmtPrinc = function (event) {
+    var principal = document.getElementById("principal").value;
+    if (typeof(principal) !== "undefined" && principal !== null && principal !== "" && !isNaN(principal)) {
+        document.getElementById("principal").value = NumberWithCommas(parseFloat(principal).toFixed(2));
+    }
+};
+
+var fmtTotal = function (event) {
+    var total = document.getElementById("total").value;
+    if (typeof(total) !== "undefined" && total !== null && total !== "" && !isNaN(total)) {
+        document.getElementById("total").value = NumberWithCommas(parseFloat(total).toFixed(2));
+    }
+};
+
+var fmtTotInt = function (event) {
+    var totalInt = document.getElementById("interest-total").value;
+    if (typeof(totalInt) !== "undefined" && totalInt !== null && totalInt !== "" && !isNaN(totalInt)) {
+        document.getElementById("interest-total").value = NumberWithCommas(parseFloat(totalInt).toFixed(2));
+    }
+};
+
 
 function hasClass(el, name) {
    return new RegExp('(\\s|^)'+name+'(\\s|$)').test(el.className);
