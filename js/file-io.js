@@ -83,7 +83,7 @@ var getAllRecords = function (event) {
     xhtmlreq.send(null);
     xhtmlreq.onreadystatechange = function(){
         if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-            console.log(xhtmlreq.responseText, xhtmlreq.responseType, xhtmlreq.responseXML);
+console.log(xhtmlreq.responseText, xhtmlreq.responseType, xhtmlreq.responseXML);
             var data = JSON.parse(xhtmlreq.responseText);
             if(typeof(data) !== "undefined" && data !== null){
                 // data is an Object type.  The keys is an inherited function of Object that returns an array of keys to that object.
@@ -93,11 +93,13 @@ var getAllRecords = function (event) {
                     out.appendChild(item);
                     item.textContent = "outerkey: " + key;
                     Object.keys(data[key]).forEach(function (key1, index1){
-                        item = document.createElement("div");
+                        item = document.createElement("button");
                         out.appendChild(item);
                         
-                        console.log("inner loop key: ", key1, "  index:", index1);
-                        item.textContent = "key: " + key1 + "  index: "+ index1 + "   principal: " + data[key][key1].principal + "   rate: " + data[key][key1].rate;
+console.log("inner loop key: ", key1, "  index:", index1);
+                        item.textContent = key + " " + key1 ;//"key: " + key1 + "  index: "+ index1 + "   principal: " + data[key][key1].principal + "   rate: " + data[key][key1].rate;
+                        item.setAttribute("id",key + "-" + key1);
+                        item.addEventListener('click',btnScenario);
                     });
                 });
             }
@@ -141,7 +143,7 @@ var newScenario = function(event){
 }
 
 var init = function(event){
-    document.getElementById("add-records").addEventListener('click', addRecords);
+    document.getElementById("add-records").addEventListener('click', saveScenario);
     document.getElementById("delete-records").addEventListener('click', delRecords);
     document.getElementById("get-records").addEventListener('click', getRecord);
     document.getElementById("get-all-records").addEventListener('click', getAllRecords);
@@ -151,7 +153,10 @@ var init = function(event){
     document.getElementById("principal").addEventListener('change', fmtPrinc);
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
-    
+        
+    document.getElementById("ok").addEventListener('click', btnOKClicked);
+    document.getElementById("cancel").addEventListener('click', btnCancelClicked);
+
 
 }
 

@@ -43,7 +43,7 @@
         
     </head>
     <body>
-        <section class="container">
+        <section id="main" class="container">
             <div class="sixteen columns">
                 <h3>Loan Calculator</h3>
             </div>
@@ -102,6 +102,20 @@
         </section>
         <!-- This section is for the what-if scenario names -->
         <section id="out">
+        </section>
+        <section id="save-window" class="hide-me">
+            <div>
+                <fieldset>
+                    <label class="fieldlabel" for="UserID">User ID:</label>
+                    <input class="field" type="email" id="user-id" placeholder="User ID - hint:email address" size="15" value="secret-user"><br/>
+<!--
+                    <label class="fieldlabel" for="scenario-name">Scenario Name:</label>
+                    <input class="field" type="text" id="scenario-name" placeholder="Scenario Name" size="15"><br/>
+-->
+                    <button id="ok" class="rnd-btn">OK</button>
+                    <button id="cancel" class="rnd-btn">Cancel</button>
+                </fieldset>
+            </div>
         </section>
     </body>
 </html>

@@ -49,4 +49,50 @@ function NumberWithCommas(x) {
 }
 
 
+var btnOKClicked = function (event) {
+    event.preventDefault();
+    var bError = false;
+    var sUserID = document.getElementById("user-id");
+    var sScenarioName = document.getElementById("loan-name");
+    if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
+        addClass(sScenarioName, "inError");
+        alert("Scenario name cannot be blank.");
+        bError = true;
+    }
+    if(typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
+        addClass(sUserID, "inError");
+        alert("Invalid User Name cannot be blank.");
+        bError = true;
+    }
+    
+    
+    if(bError) return;
+    
+//    addRecords();
+    
+    removeClass(sUserID, "inError");
+    removeClass(sScenarioName, "inError");
+    addClass(document.getElementById("save-window"), "hide-me"); 
+    return;
+}
 
+var btnCancelClicked = function(event){
+    var sUserID = document.getElementById("user-id");
+    var sScenarioName = document.getElementById("scenario-name");
+    removeClass(sUserID, "inError");
+    removeClass(sScenarioName, "inError");
+    addClass(document.getElementById("save-window"), "hide-me"); 
+    return;
+}
+
+var saveScenario = function (event) {
+    event.preventDefault();
+    var secSave = document.getElementById("save-window");
+    var secMain = document.getElementById("main");
+    removeClass(secSave, "hide-me");
+    
+}
+
+var btnScenario = function(event) {
+    console.log("hello");
+}

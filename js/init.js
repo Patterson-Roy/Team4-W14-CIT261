@@ -21,6 +21,24 @@ var resetIt = function (event) {
     });
 };
 
+var saveScenario = function (event) {
+    event.preventDefault();
+    var secSave = document.getElementById("save-section");
+    var secMain = document.getElementById("main");
+    addClass(secMain, "hide-me");
+    removeClass(secSave, "hide-me");
+}
+
+var btnOKClicked = function (event) {
+    event.preventDefault();
+    var sScenarioName = document.getElementById("scenario-name");
+    if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
+        addClass(sScenarioName, "error");
+        alert("Scenario name cannot be blank.");
+        return;
+    }
+}
+
 var newListener = function () {
     var submitButton = document.getElementById('submitButton');
     submitButton.addEventListener('click', clickIt);
@@ -30,6 +48,12 @@ var newListener = function () {
     
     var prinFld = document.getElementById("principal");
     prinFld.addEventListener('change', fmtPrinc);
+    
+    var btnSave = document.getElementById("add-records");
+    btnSave.addEventListener('click', saveScenario);
+    
+    var btnOK = document.getElementById("OK");
+    btnOK.addEventListener('click', btnOKClicked);
 };
 
 document.addEventListener('DOMContentLoaded', newListener);
