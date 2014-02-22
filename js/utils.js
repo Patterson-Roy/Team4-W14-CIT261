@@ -95,11 +95,14 @@ var saveScenario = function (event) {
     var sType = document.getElementById("loan-type");
     
     // build out the scenario button
-    item = document.createElement("button");
-    out.appendChild(item);
-    item.textContent = sScenarioName.value + " " +  sType.value;
-    item.setAttribute("id",sScenarioName.value + "-" + sType.value);
-    item.addEventListener('click',btnScenario);
+    var btnButton = document.getElementById(sScenarioName.value + "-" + sType.value);
+    if(!btnButton){
+        item = document.createElement("button");
+        out.appendChild(item);
+        item.textContent = sScenarioName.value + " " +  sType.value;
+        item.setAttribute("id",sScenarioName.value + "-" + sType.value);
+        item.addEventListener('click',btnScenario);
+    }
     
     return;
 }
