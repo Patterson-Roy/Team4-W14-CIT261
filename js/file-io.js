@@ -1,10 +1,8 @@
-var m_sUserID = localStorage.getItem("userid"); // "secret user";
-
-if(m_sUserID == "" || m_sUserID == null)
-    m_sUserID = "secret user";
-
-var addRecords = function (event) {
-    event.preventDefault();
+function addRecords () {
+    
+    var sUserID = localStorage.getItem('userid');
+    if(sUserID === null || sUserID === "")
+        return false;
 
     var data = {}; // javascript object
     
@@ -29,11 +27,16 @@ var addRecords = function (event) {
         data.total = fTotal.replace(/,/g,""); // strip any commas
         data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
         
-        xhtmlreq.open("PUT","https://blistering-fire-7540.firebaseio.com/" + m_sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
+        xhtmlreq.open("PUT","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
         xhtmlreq.setRequestHeader("Content-Type", "application/json");
         xhtmlreq.send(JSON.stringify(data));
+        
+        // save data for session storage
+        sessionStorage.setItem(sScenarioName + sLoanType,JSON.stringify(data));
+        return true;
     }else{
         alert("record not added fields are empty");
+        return false;
     }
 }
 
@@ -41,11 +44,16 @@ var addRecords = function (event) {
 var getRecord = function (event) {
     event.preventDefault();
     
+    var sUserID = localStorage.getItem('userid');
+    if(sUserID === null || sUserID === "")
+        return;
+
+    
     var sScenarioName = document.getElementById("loan-name").value;
     var sLoanType = document.getElementById("loan-type").value;
     
     var xhtmlreq= new XMLHttpRequest();
-    xhtmlreq.open("GET","https://blistering-fire-7540.firebaseio.com/" + m_sUserID + "/"+ sScenarioName + "/" + sLoanType +".json");
+    xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType +".json");
     
     xhtmlreq.send(null);
     xhtmlreq.onreadystatechange = function(){
@@ -72,13 +80,17 @@ var getRecord = function (event) {
 var getAllRecords = function (event) {
     event.preventDefault();
     
+    var sUserID = localStorage.getItem('userid');
+    if(sUserID === null || sUserID === "")
+        return;
+
     var out = document.getElementById("out");
     out.innerHTML = ""; // clear the HTML from previous reads
     
     var item = {};
     
     var xhtmlreq= new XMLHttpRequest();
-    xhtmlreq.open("GET","https://blistering-fire-7540.firebaseio.com/" + m_sUserID + ".json");
+    xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + ".json");
     
     xhtmlreq.send(null);
     xhtmlreq.onreadystatechange = function(){
@@ -100,6 +112,9 @@ console.log("inner loop key: ", key1, "  index:", index1);
                         item.textContent = key + " " + key1 ;//"key: " + key1 + "  index: "+ index1 + "   principal: " + data[key][key1].principal + "   rate: " + data[key][key1].rate;
                         item.setAttribute("id",key + "-" + key1);
                         item.addEventListener('click',btnScenario);
+
+                        // save data for session storage
+                        sessionStorage.setItem(key + key1,JSON.stringify(data[key][key1]));
                     });
                 });
             }
@@ -107,23 +122,25 @@ console.log("inner loop key: ", key1, "  index:", index1);
     }
 }
 
-var delRecords = function(event){
+var delRecords = function(event, sScenarioName, sLoanType){
     event.preventDefault();
     
+    var sUserID = localStorage.getItem('userid');
+    if(sUserID === null || sUserID === "")
+        return;
+
     var sScenarioName = document.getElementById("loan-name").value;
     var sLoanType = document.getElementById("loan-type").value;
     
-    document.getElementById("output").textContent="";
-    document.getElementById("output1").textContent="";
-    document.getElementById("output2").textContent="";
     var xhtmlreq = new XMLHttpRequest();
-    var output = document.getElementById("output");
-    xhtmlreq.open("DELETE","https://blistering-fire-7540.firebaseio.com/" + m_sUserID + "/"+ sScenarioName + "/" + sLoanType + ".json");
+    var output = document.getElementById("out");
+    xhtmlreq.open("DELETE","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType + ".json");
     xhtmlreq.send(null);
     xhtmlreq.onreadystatechange = function(){
         if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-            console.log("delete successful");
-            output.textContent = "";
+console.log("delete successful");
+            output.removeChild(sScenarioName + "-" + sLoanType);
+            sessionStorage.removeItem(sScenarioName + sLoanType);
         }
     }
 }
@@ -142,6 +159,8 @@ var newScenario = function(event){
     
 }
 
+
+
 var init = function(event){
     document.getElementById("add-records").addEventListener('click', saveScenario);
     document.getElementById("delete-records").addEventListener('click', delRecords);
@@ -154,8 +173,8 @@ var init = function(event){
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
         
-    document.getElementById("ok").addEventListener('click', btnOKClicked);
-    document.getElementById("cancel").addEventListener('click', btnCancelClicked);
+//    document.getElementById("ok").addEventListener('click', btnOKClicked);
+//    document.getElementById("cancel").addEventListener('click', btnCancelClicked);
 
 
 }

@@ -48,51 +48,84 @@ function NumberWithCommas(x) {
     return parts.join("."); // reassemble the number on the decimal
 }
 
+function ValidateEmail(mail){
+    if(typeof (mail) !== undefined && mail !== "" && mail !== null){
+        return true;
+    }else{
+        return false;
+    }
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
+    {  
+        return true; 
+    }
+    return false;
+} 
 
-var btnOKClicked = function (event) {
+
+var saveScenario = function (event) {
     event.preventDefault();
-    var bError = false;
-    var sUserID = document.getElementById("user-id");
+    var item = {};
+    var sUserID = localStorage.getItem('userid');
+    if(typeof(sUserID) === undefined || sUserID === null || 
+        typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
+        while(!ValidateEmail(sUserID)){
+            sUserID = prompt("Enter valid email address","");
+            if(sUserID === null){
+                return;
+            }
+        }
+    }
+
+    // save User ID to persisten local storage
+    localStorage.setItem('userid', sUserID);
+    
     var sScenarioName = document.getElementById("loan-name");
     if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
         addClass(sScenarioName, "inError");
         alert("Scenario name cannot be blank.");
-        bError = true;
-    }
-    if(typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
-        addClass(sUserID, "inError");
-        alert("Invalid User Name cannot be blank.");
-        bError = true;
+        return;
+    }else{
+        removeClass(sScenarioName, "inError");
     }
     
+    if(!addRecords()){
+        return;
+    }
     
-    if(bError) return;
+    var sType = document.getElementById("loan-type");
     
-//    addRecords();
+    // build out the scenario button
+    item = document.createElement("button");
+    out.appendChild(item);
+    item.textContent = sScenarioName.value + " " +  sType.value;
+    item.setAttribute("id",sScenarioName.value + "-" + sType.value);
+    item.addEventListener('click',btnScenario);
     
-    removeClass(sUserID, "inError");
-    removeClass(sScenarioName, "inError");
-    addClass(document.getElementById("save-window"), "hide-me"); 
     return;
 }
 
-var btnCancelClicked = function(event){
-    var sUserID = document.getElementById("user-id");
-    var sScenarioName = document.getElementById("scenario-name");
-    removeClass(sUserID, "inError");
-    removeClass(sScenarioName, "inError");
-    addClass(document.getElementById("save-window"), "hide-me"); 
-    return;
-}
-
-var saveScenario = function (event) {
-    event.preventDefault();
-    var secSave = document.getElementById("save-window");
-    var secMain = document.getElementById("main");
-    removeClass(secSave, "hide-me");
+function LoadScenario(sScenarioName, sLoanType){
+    var data = JSON.parse(sessionStorage.getItem(sScenarioName + sLoanType));
     
+    document.getElementById("loan-name").value = sScenarioName;
+    document.getElementById("loan-type").value = sLoanType; // car, home, other
+    document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
+    document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
+    document.getElementById("periods").value = parseInt(data.term);
+    document.getElementById("period-type").value = data.periodtype; // month, quarter, year
+    document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
+    document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
+    document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
+    
+//    addClass(document.getElementById("out"), "hide-me");
 }
 
 var btnScenario = function(event) {
-    console.log("hello");
+console.log(event.target.textContent);
+    var key = event.target.textContent;
+console.log(key.split(" "));
+    var aMyArray = key.split(" ");
+    var sScenarioName = aMyArray[0];
+    var sLoanType = aMyArray[1];
+    LoadScenario(sScenarioName, sLoanType);
 }
