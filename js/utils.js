@@ -49,11 +49,14 @@ function NumberWithCommas(x) {
 }
 
 function ValidateEmail(mail){
+/*
     if(typeof (mail) !== undefined && mail !== "" && mail !== null){
         return true;
     }else{
         return false;
     }
+*/
+    
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
     {  
         return true; 
@@ -70,15 +73,21 @@ var saveScenario = function (event) {
         typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
         while(!ValidateEmail(sUserID)){
             sUserID = prompt("Enter valid email address","");
+            // if cancel button on prompt was clicked, null is returned.
             if(sUserID === null){
                 return;
+            }
+            else{
+                if(ValidateEmail(sUserID)){
+                    sUserID = sUserID.replace( /\./g, "" ); // strip out periods
+                    // save User ID to persistent local storage
+                    localStorage.setItem('userid', sUserID);
+                    break;
+                }
             }
         }
     }
 
-    // save User ID to persisten local storage
-    localStorage.setItem('userid', sUserID);
-    
     var sScenarioName = document.getElementById("loan-name");
     if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
         addClass(sScenarioName, "inError");

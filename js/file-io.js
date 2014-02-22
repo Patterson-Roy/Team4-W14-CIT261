@@ -1,41 +1,45 @@
 function addRecords () {
+    try{
     
-    var sUserID = localStorage.getItem('userid');
-    if(sUserID === null || sUserID === "")
-        return false;
+        var sUserID = localStorage.getItem('userid');
+        if(sUserID === null || sUserID === "")
+            return false;
 
-    var data = {}; // javascript object
-    
-    var xhtmlreq = new XMLHttpRequest();
-    
-    var sScenarioName = document.getElementById("loan-name").value;
-    var sLoanType = document.getElementById("loan-type").value; // car, home, other
-    var fRate = document.getElementById("rate").value;
-    var fPrincipal = document.getElementById("principal").value;
-    var iTerm = document.getElementById("periods").value;
-    var sPdType = document.getElementById("period-type").value; // month, quarter, year
-    var fPayment = document.getElementById("payment").value;
-    var fTotal = document.getElementById("total").value;
-    var fTotalInterest = document.getElementById("interest-total").value;
-    
-    if((typeof(sScenarioName) !== "undefined" && sScenarioName !== "" && sScenarioName !== null)){
-        data.principal = fPrincipal.replace( /,/g, "" ); // strip any commas;
-        data.rate = fRate.replace( /,/g, "" ); // strip any commas;
-        data.periodtype = sPdType;
-        data.term = iTerm;
-        data.payment = fPayment.replace( /,/g, "" ); // strip any commas
-        data.total = fTotal.replace(/,/g,""); // strip any commas
-        data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
-        
-        xhtmlreq.open("PUT","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
-        xhtmlreq.setRequestHeader("Content-Type", "application/json");
-        xhtmlreq.send(JSON.stringify(data));
-        
-        // save data for session storage
-        sessionStorage.setItem(sScenarioName + sLoanType,JSON.stringify(data));
-        return true;
-    }else{
-        alert("record not added fields are empty");
+        var data = {}; // javascript object
+
+        var xhtmlreq = new XMLHttpRequest();
+
+        var sScenarioName = document.getElementById("loan-name").value;
+        var sLoanType = document.getElementById("loan-type").value; // car, home, other
+        var fRate = document.getElementById("rate").value;
+        var fPrincipal = document.getElementById("principal").value;
+        var iTerm = document.getElementById("periods").value;
+        var sPdType = document.getElementById("period-type").value; // month, quarter, year
+        var fPayment = document.getElementById("payment").value;
+        var fTotal = document.getElementById("total").value;
+        var fTotalInterest = document.getElementById("interest-total").value;
+
+        if((typeof(sScenarioName) !== "undefined" && sScenarioName !== "" && sScenarioName !== null)){
+            data.principal = fPrincipal.replace( /,/g, "" ); // strip any commas;
+            data.rate = fRate.replace( /,/g, "" ); // strip any commas;
+            data.periodtype = sPdType;
+            data.term = iTerm;
+            data.payment = fPayment.replace( /,/g, "" ); // strip any commas
+            data.total = fTotal.replace(/,/g,""); // strip any commas
+            data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
+
+            xhtmlreq.open("PUT","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
+            xhtmlreq.setRequestHeader("Content-Type", "application/json");
+            xhtmlreq.send(JSON.stringify(data));
+
+            // save data for session storage
+            sessionStorage.setItem(sScenarioName + sLoanType,JSON.stringify(data));
+            return true;
+        }else{
+            alert("record not added fields are empty");
+            return false;
+        }
+    }catch(exception){
         return false;
     }
 }
@@ -139,7 +143,7 @@ var delRecords = function(event, sScenarioName, sLoanType){
     xhtmlreq.onreadystatechange = function(){
         if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
 console.log("delete successful");
-            output.removeChild(sScenarioName + "-" + sLoanType);
+            output.removeChild(document.getElementById(sScenarioName + "-" + sLoanType));
             sessionStorage.removeItem(sScenarioName + sLoanType);
         }
     }
