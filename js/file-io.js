@@ -1,7 +1,7 @@
 function addRecords () {
     try{
     
-        var sUserID = localStorage.getItem('userid');
+        var sUserID = localStorage.getItem('nerdherdcalc-userid');
         if(sUserID === null || sUserID === "")
             return false;
 
@@ -33,7 +33,7 @@ function addRecords () {
             xhtmlreq.send(JSON.stringify(data));
 
             // save data for session storage
-            sessionStorage.setItem(sScenarioName + sLoanType,JSON.stringify(data));
+            sessionStorage.setItem(sScenarioName + "|" + sLoanType,JSON.stringify(data));
             return true;
         }else{
             alert("record not added fields are empty");
@@ -48,7 +48,7 @@ function addRecords () {
 var getRecord = function (event) {
     event.preventDefault();
     
-    var sUserID = localStorage.getItem('userid');
+    var sUserID = localStorage.getItem('nerdherdcalc-userid');
     if(sUserID === null || sUserID === "")
         return;
 
@@ -82,70 +82,85 @@ var getRecord = function (event) {
 
 
 var getAllRecords = function (event) {
-    event.preventDefault();
-    
-    var sUserID = localStorage.getItem('userid');
-    if(sUserID === null || sUserID === "")
-        return;
+    try{
+        event.preventDefault();
 
-    var out = document.getElementById("out");
-    out.innerHTML = ""; // clear the HTML from previous reads
-    
-    var item = {};
-    
-    var xhtmlreq= new XMLHttpRequest();
-    xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + ".json");
-    
-    xhtmlreq.send(null);
-    xhtmlreq.onreadystatechange = function(){
-        if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
+        var sUserID = localStorage.getItem('nerdherdcalc-userid');
+        if(sUserID === null || sUserID === "")
+            return;
+
+        var out = document.getElementById("out");
+        out.innerHTML = ""; // clear the HTML from previous reads
+
+        var item = {};
+
+        var xhtmlreq= new XMLHttpRequest();
+        xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + ".json");
+
+        xhtmlreq.send(null);
+        xhtmlreq.onreadystatechange = function(){
+            if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
 console.log(xhtmlreq.responseText, xhtmlreq.responseType, xhtmlreq.responseXML);
-            var data = JSON.parse(xhtmlreq.responseText);
-            if(typeof(data) !== "undefined" && data !== null){
-                // data is an Object type.  The keys is an inherited function of Object that returns an array of keys to that object.
-                // we can do a forEach on the data object this way to get the parts and pieces we need for the app.
-                Object.keys(data).forEach(function (key, index) {
-                    item=document.createElement("div");
-                    out.appendChild(item);
-                    item.textContent = "outerkey: " + key;
-                    Object.keys(data[key]).forEach(function (key1, index1){
-                        item = document.createElement("button");
+                var data = JSON.parse(xhtmlreq.responseText);
+                if(typeof(data) !== "undefined" && data !== null){
+                    // data is an Object type.  The keys is an inherited function of Object that returns an array of keys to that object.
+                    // we can do a forEach on the data object this way to get the parts and pieces we need for the app.
+                    Object.keys(data).forEach(function (key, index) {
+                        item=document.createElement("div");
                         out.appendChild(item);
-                        
-console.log("inner loop key: ", key1, "  index:", index1);
-                        item.textContent = key + " " + key1 ;//"key: " + key1 + "  index: "+ index1 + "   principal: " + data[key][key1].principal + "   rate: " + data[key][key1].rate;
-                        item.setAttribute("id",key + "-" + key1);
-                        item.addEventListener('click',btnScenario);
+                        item.textContent = "outerkey: " + key;
+                        Object.keys(data[key]).forEach(function (key1, index1){
+                            item = document.createElement("button");
+                            out.appendChild(item);
 
-                        // save data for session storage
-                        sessionStorage.setItem(key + key1,JSON.stringify(data[key][key1]));
+console.log("inner loop key: ", key1, "  index:", index1);
+                            item.textContent = key + "|" + key1 ;//"key: " + key1 + "  index: "+ index1 + "   principal: " + data[key][key1].principal + "   rate: " + data[key][key1].rate;
+                            item.setAttribute("id",key + "-" + key1);
+                            item.addEventListener('click',btnScenario);
+
+                            // save data for session storage
+                            sessionStorage.setItem(key + '|' +  key1,JSON.stringify(data[key][key1]));
+                        });
                     });
-                });
+                }
             }
         }
+    }catch(exception){
     }
 }
 
 var delRecords = function(event, sScenarioName, sLoanType){
-    event.preventDefault();
-    
-    var sUserID = localStorage.getItem('userid');
-    if(sUserID === null || sUserID === "")
-        return;
+    try{
+        event.preventDefault();
 
-    var sScenarioName = document.getElementById("loan-name").value;
-    var sLoanType = document.getElementById("loan-type").value;
-    
-    var xhtmlreq = new XMLHttpRequest();
-    var output = document.getElementById("out");
-    xhtmlreq.open("DELETE","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType + ".json");
-    xhtmlreq.send(null);
-    xhtmlreq.onreadystatechange = function(){
-        if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-console.log("delete successful");
-            output.removeChild(document.getElementById(sScenarioName + "-" + sLoanType));
-            sessionStorage.removeItem(sScenarioName + sLoanType);
+        var sUserID = localStorage.getItem('nerdherdcalc-userid');
+        if(sUserID === null || sUserID === ""){
+            return;
         }
+        
+        var sScenarioName = document.getElementById("loan-name").value;
+        var sLoanType = document.getElementById("loan-type").value;
+
+        // look in the local session storage for the item.  If not found, then return
+        var hold = sessionStorage.getItem(sScenarioName + sLoanType);
+        if (hold === null){
+            return;
+        }
+        
+        // remove the record from the database and from local session storage.
+
+        var xhtmlreq = new XMLHttpRequest();
+        var output = document.getElementById("out");
+        xhtmlreq.open("DELETE","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType + ".json");
+        xhtmlreq.send(null);
+        xhtmlreq.onreadystatechange = function(){
+            if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
+console.log("delete successful");
+                output.removeChild(document.getElementById(sScenarioName + "-" + sLoanType));
+                sessionStorage.removeItem(sScenarioName + sLoanType);
+            }
+        }
+    }catch(exception){
     }
 }
 
@@ -176,11 +191,6 @@ var init = function(event){
     document.getElementById("principal").addEventListener('change', fmtPrinc);
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
-        
-//    document.getElementById("ok").addEventListener('click', btnOKClicked);
-//    document.getElementById("cancel").addEventListener('click', btnCancelClicked);
-
-
 }
 
 document.addEventListener("DOMContentLoaded",init);

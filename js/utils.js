@@ -66,78 +66,97 @@ function ValidateEmail(mail){
 
 
 var saveScenario = function (event) {
-    event.preventDefault();
-    var item = {};
-    var sUserID = localStorage.getItem('userid');
-    if(typeof(sUserID) === undefined || sUserID === null || 
-        typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
-        while(!ValidateEmail(sUserID)){
-            sUserID = prompt("Enter valid email address","");
-            // if cancel button on prompt was clicked, null is returned.
-            if(sUserID === null){
-                return;
-            }
-            else{
-                if(ValidateEmail(sUserID)){
-                    sUserID = sUserID.replace( /\./g, "" ); // strip out periods
-                    // save User ID to persistent local storage
-                    localStorage.setItem('userid', sUserID);
-                    break;
+    try{
+        event.preventDefault();
+        var item = {};
+        var sUserID = localStorage.getItem('nerherdcalc-userid');
+
+        // if no previous user id, then prompt for it and store it as applicable.
+        if(typeof(sUserID) === undefined || sUserID === null || 
+            typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
+
+            // loop until either cancel or a valid value is keyed in.
+            while(!ValidateEmail(sUserID)){
+                sUserID = prompt("Enter valid email address","");
+
+                // if cancel button on prompt was clicked, null is returned.
+                if(sUserID === null){
+                    return;
+                }
+                else{
+                    // else, validate the value to email address.
+                    if(ValidateEmail(sUserID)){
+
+                        sUserID = sUserID.replace( /\./g, "" ); // strip out periods as firebase doesn't like them
+                        // save User ID to persistent local storage
+                        localStorage.setItem('nerdherdcalc-userid', sUserID);
+                        break;
+
+                    }
                 }
             }
         }
-    }
 
-    var sScenarioName = document.getElementById("loan-name");
-    if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
-        addClass(sScenarioName, "inError");
-        alert("Scenario name cannot be blank.");
-        return;
-    }else{
-        removeClass(sScenarioName, "inError");
+        var sScenarioName = document.getElementById("loan-name");
+        if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
+            addClass(sScenarioName, "inError");
+            alert("Scenario name cannot be blank.");
+            return;
+        }else{
+            removeClass(sScenarioName, "inError");
+        }
+
+        // attempt to add the records to firebase
+
+        if(!addRecords()){
+            return; // add failed, so just return here.
+        }
+
+        var sType = document.getElementById("loan-type");
+
+        // build out the scenario button
+        var btnButton = document.getElementById(sScenarioName.value + "-" + sType.value);
+        if(!btnButton){
+            item = document.createElement("button");
+            out.appendChild(item);
+            item.textContent = sScenarioName.value + " " +  sType.value;  // put the scenario key as the button name
+            item.setAttribute("id",sScenarioName.value + "-" + sType.value);
+            item.addEventListener('click',btnScenario);// event handler
+        }
+    }catch( exception ){
     }
-    
-    if(!addRecords()){
-        return;
-    }
-    
-    var sType = document.getElementById("loan-type");
-    
-    // build out the scenario button
-    var btnButton = document.getElementById(sScenarioName.value + "-" + sType.value);
-    if(!btnButton){
-        item = document.createElement("button");
-        out.appendChild(item);
-        item.textContent = sScenarioName.value + " " +  sType.value;
-        item.setAttribute("id",sScenarioName.value + "-" + sType.value);
-        item.addEventListener('click',btnScenario);
-    }
-    
     return;
 }
 
-function LoadScenario(sScenarioName, sLoanType){
-    var data = JSON.parse(sessionStorage.getItem(sScenarioName + sLoanType));
-    
-    document.getElementById("loan-name").value = sScenarioName;
-    document.getElementById("loan-type").value = sLoanType; // car, home, other
-    document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
-    document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
-    document.getElementById("periods").value = parseInt(data.term);
-    document.getElementById("period-type").value = data.periodtype; // month, quarter, year
-    document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
-    document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
-    document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
+function LoadScenario(key){
+    try{
+        var data = JSON.parse(sessionStorage.getItem(key));
+        
+        var arrMyArr = key.split("|");
+
+        document.getElementById("loan-name").value = arrMyArr[0]; // scenario name
+        document.getElementById("loan-type").value = arrMyArr[1]; // car, home, other
+        document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
+        document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
+        document.getElementById("periods").value = parseInt(data.term);
+        document.getElementById("period-type").value = data.periodtype; // month, quarter, year
+        document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
+        document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
+        document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
     
 //    addClass(document.getElementById("out"), "hide-me");
+    }catch(exception){
+    }
 }
 
 var btnScenario = function(event) {
+    try{
 console.log(event.target.textContent);
-    var key = event.target.textContent;
-console.log(key.split(" "));
-    var aMyArray = key.split(" ");
-    var sScenarioName = aMyArray[0];
-    var sLoanType = aMyArray[1];
-    LoadScenario(sScenarioName, sLoanType);
+        
+        // get the button text -- it's the key 
+        var key = event.target.textContent;
+
+        LoadScenario(key);
+    }catch(exception){
+    }
 }
