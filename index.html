@@ -30,16 +30,6 @@
         <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
         <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
         <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
-
-        <!-- JavaScript
-        ================================================== -->
-        <script src="js/utils.js" type="text/javascript"></script>
-        <script src="js/file-io.js" type="text/javascript"></script>
-        <script src="js/calculate.js" type="text/javascript"></script>
-        <script src="js/calculatepayment.js" type="text/javascript"></script>
-        <script src="js/calculateperiods.js" type="text/javascript"></script>
-        <script src="js/calculateprincipal.js" type="text/javascript"></script>
-        <script src="js/calculaterate.js" type="text/javascript"></script>
         
     </head>
     <body>
@@ -90,6 +80,7 @@
                             <button id="new">New</button>
                             <button id="add-records">Save Scenario</button>
                             <button id="delete-records">Delete Scenario</button>
+                            <button id="open-load-screen" type="button">Load Scenario</button>
                         </div>
                     </fieldset>
                 </form>
@@ -101,5 +92,109 @@
         <!-- This section is for the what-if scenario buttons -->
         <section id="out">
         </section>
+        
+        <div id="load-screen" class="hidden">
+            <div class="modal-title">
+                <h1>Saved Scenarios</h1>
+                <h3>Please select a saved scenario.</h3>
+            </div>
+            <div id="scenario-list" class="padding_10">
+                <section class="scenario-item">
+                    <img src="images/icons/cash.png" >
+                    <div class="title">Option 1</div>
+                    Option 1
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 2
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/dwelling1.png" >
+                    <div class="title">Option 1</div>
+                    Option 3
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 4
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/cash.png" >
+                    <div class="title">Option 1</div>
+                    Option 1
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 2
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/dwelling1.png" >
+                    <div class="title">Option 1</div>
+                    Option 3
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 4
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/cash.png" >
+                    <div class="title">Option 1</div>
+                    Option 1
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 2
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/dwelling1.png" >
+                    <div class="title">Option 1</div>
+                    Option 3
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 4
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/cash.png" >
+                    <div class="title">Option 1</div>
+                    Option 1
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 2
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/dwelling1.png" >
+                    <div class="title">Option 1</div>
+                    Option 3
+                </section>
+                <section class="scenario-item">
+                    <img src="images/icons/luxury3.png" >
+                    <div class="title">Option 1</div>
+                    Option 4
+                </section>
+            </div>
+            <div class="modal-options padding_10">
+                <button id="close-modal" type="button">Cancel</button>
+            </div>
+        </div>
+        
+        <!-- JavaScript
+        ================================================== -->
+        <script src="js/utils.js" type="text/javascript"></script>
+        <script src="js/file-io.js" type="text/javascript"></script>
+        <script src="js/calculate.js" type="text/javascript"></script>
+        <script src="js/calculatepayment.js" type="text/javascript"></script>
+        <script src="js/calculateperiods.js" type="text/javascript"></script>
+        <script src="js/calculateprincipal.js" type="text/javascript"></script>
+        <script src="js/calculaterate.js" type="text/javascript"></script>
+        <script src="js/layout.js" type="text/javascript"></script>
+        
     </body>
 </html>
