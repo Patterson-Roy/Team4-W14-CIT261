@@ -204,4 +204,43 @@ var init = function(event){
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
 }
 
+// firebase encode/decoder
+var forbiddenChars = '.$[]#/'.split(''); //contains the firebase forbidden characters
+
+// function is designed to take in a simple string and then replace the offensive characters with 
+// %ascii_character%. It is designed to be called on any code that is sent to firebase.
+function firebaseEncode(str)
+{
+    var encodedStr = str;
+    
+    for (var i = 0; i<forbiddenChars.length; i++)
+    {
+        while ( encodedStr.indexOf(forbiddenChars[i]) != -1 ) {
+            encodedStr = encodedStr.replace(forbiddenChars[i], '%' + forbiddenChars[i].charCodeAt(0) + '%');
+        };
+        
+       // encodedStr.replace(new RegExp(forbiddenChars[i], 'g'), '%' + forbiddenChars[i].charCodeAt(0) + '%');
+    }
+    
+    return encodedStr;
+}
+
+// function is designed to take in a string that has been encoded with the matching encoder and reverse the string
+// back to its human readiable form.
+function firebaseDecode(encodedStr)
+{
+    var decodedStr = encodedStr;
+    
+    for (var i = 0; i<forbiddenChars.length; i++)
+    {
+        while ( decodedStr.indexOf('%' + forbiddenChars[i].charCodeAt(0) + '%') != -1 ) {
+            decodedStr = decodedStr.replace('%' + forbiddenChars[i].charCodeAt(0) + '%', forbiddenChars[i]);
+        };
+        
+       // encodedStr.replace(new RegExp(forbiddenChars[i], 'g'), '%' + forbiddenChars[i].charCodeAt(0) + '%');
+    }
+    
+    return decodedStr;
+}
+
 document.addEventListener("DOMContentLoaded",init);
