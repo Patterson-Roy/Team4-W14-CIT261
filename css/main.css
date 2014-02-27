@@ -81,30 +81,40 @@ label.fieldlabel{
     top: 0px;
     left: 5%;
     z-index: 1001;
-    background: #FFF;
     
     width: 90%;
-    max-height: 95%;
+    max-width: 400px;
+    margin-top: 120px;
     
-    border: 1px solid #000;
-    border-top: 0px;
+    overflow-y: auto;
+    max-height: 70%;
 }
+
+.modal-title {
+    background: #000;
+    color: #fff !important;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+}
+
 
 .modal-options {
     text-align: right;
-    
 }
 
 #scenario-list {
     max-height: 50%;
-    overflow-y: auto;
 }
 
 .scenario-item {
     padding: 10px;
-    border-bottom: 1px solid #ccc;
-    height: 100px;
-    float: left;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    max-width: 400px;
     
 }
 
