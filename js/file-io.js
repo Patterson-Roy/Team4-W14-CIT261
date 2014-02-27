@@ -1,15 +1,21 @@
 function addRecords () {
     try{
-    
         var sUserID = localStorage.getItem('nerdherdcalc-userid');
-        if(sUserID === null || sUserID === "")
-            return false;
-
+        var sScenarioName = document.getElementById("scenario-name").value;
+        if(sUserID === null || 
+           sUserID === "" || 
+           typeof(sScenarioName) === undefined || 
+           sScenarioName === "" || 
+           sScenarioName === " " || 
+           sScenarioName === null){
+              console.log('add failed: user ID or scenario name not given.  User ID: ' + sUserID + '; scenario name: ' + sScenarioName +'.');
+              return false;
+        }
+        
         var data = {}; // javascript object
 
         var xhtmlreq = new XMLHttpRequest();
 
-        var sScenarioName = document.getElementById("loan-name").value;
         var sLoanType = document.getElementById("loan-type").value; // car, home, other
         var fRate = document.getElementById("rate").value;
         var fPrincipal = document.getElementById("principal").value;
@@ -19,66 +25,60 @@ function addRecords () {
         var fTotal = document.getElementById("total").value;
         var fTotalInterest = document.getElementById("interest-total").value;
 
-        if((typeof(sScenarioName) !== "undefined" && sScenarioName !== "" && sScenarioName !== null)){
-            data.principal = fPrincipal.replace( /,/g, "" ); // strip any commas;
-            data.rate = fRate.replace( /,/g, "" ); // strip any commas;
-            data.periodtype = sPdType;
-            data.term = iTerm;
-            data.payment = fPayment.replace( /,/g, "" ); // strip any commas
-            data.total = fTotal.replace(/,/g,""); // strip any commas
-            data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
+        data.principal = fPrincipal.replace( /,/g, "" ); // strip any commas;
+        data.rate = fRate.replace( /,/g, "" ); // strip any commas;
+        data.periodtype = sPdType;
+        data.term = iTerm;
+        data.payment = fPayment.replace( /,/g, "" ); // strip any commas
+        data.total = fTotal.replace(/,/g,""); // strip any commas
+        data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
 
-            xhtmlreq.open("PUT","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
-            xhtmlreq.setRequestHeader("Content-Type", "application/json");
-            xhtmlreq.send(JSON.stringify(data));
+        xhtmlreq.open("PUT","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
+        xhtmlreq.setRequestHeader("Content-Type", "application/json");
+        xhtmlreq.send(JSON.stringify(data));
 
-            // save data for session storage
-            sessionStorage.setItem(sScenarioName + "|" + sLoanType,JSON.stringify(data));
-            return true;
-        }else{
-            alert("record not added fields are empty");
-            return false;
-        }
+        // save data for session storage
+        sessionStorage.setItem(sScenarioName + "|" + sLoanType,JSON.stringify(data));
+        return true;
     }catch(exception){
         return false;
     }
 }
 
 
-var getRecord = function (event) {
-    event.preventDefault();
-    
-    var sUserID = localStorage.getItem('nerdherdcalc-userid');
-    if(sUserID === null || sUserID === "")
-        return;
-
-    
-    var sScenarioName = document.getElementById("loan-name").value;
-    var sLoanType = document.getElementById("loan-type").value;
-    
-    var xhtmlreq= new XMLHttpRequest();
-    xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType +".json");
-    
-    xhtmlreq.send(null);
-    xhtmlreq.onreadystatechange = function(){
-        if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-            console.log(xhtmlreq.responseText, xhtmlreq.responseType, xhtmlreq.responseXML);
-            var data = JSON.parse(xhtmlreq.responseText);
-            var output = document.getElementById("output");
-            if(typeof(data) !== "undefined" && data !== null){
-                document.getElementById("loan-name").value = sScenarioName;
-                document.getElementById("loan-type").value = sLoanType; // car, home, other
-                document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
-                document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
-                document.getElementById("periods").value = parseInt(data.term);
-                document.getElementById("period-type").value = data.periodtype; // month, quarter, year
-                document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
-                document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
-                document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
-            }
-        }
-    }
-}
+//var getRecord = function (event) {
+//    event.preventDefault();
+//    
+//    var sUserID = localStorage.getItem('nerdherdcalc-userid');
+//    if(sUserID === null || sUserID === "")
+//        return;
+//
+//    
+//    var sScenarioName = document.getElementById("scenario-name").value;
+//    var sLoanType = document.getElementById("loan-type").value;
+//    
+//    var xhtmlreq= new XMLHttpRequest();
+//    xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType +".json");
+//    
+//    xhtmlreq.send(null);
+//    xhtmlreq.onreadystatechange = function(){
+//        if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
+//            var data = JSON.parse(xhtmlreq.responseText);
+//            var output = document.getElementById("output");
+//            if(typeof(data) !== "undefined" && data !== null){
+//                document.getElementById("scenario-name").value = sScenarioName;
+//                document.getElementById("loan-type").value = sLoanType; // car, home, other
+//                document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
+//                document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
+//                document.getElementById("periods").value = parseInt(data.term);
+//                document.getElementById("period-type").value = data.periodtype; // month, quarter, year
+//                document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
+//                document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
+//                document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
+//            }
+//        }
+//    }
+//}
 
 
 var getAllRecords = function (event) {
@@ -100,7 +100,6 @@ var getAllRecords = function (event) {
         xhtmlreq.send(null);
         xhtmlreq.onreadystatechange = function(){
             if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-console.log(xhtmlreq.responseText, xhtmlreq.responseType, xhtmlreq.responseXML);
                 var data = JSON.parse(xhtmlreq.responseText);
                 if(typeof(data) !== "undefined" && data !== null){
                     // data is an Object type.  The keys is an inherited function of Object that returns an array of keys to that object.
@@ -108,14 +107,14 @@ console.log(xhtmlreq.responseText, xhtmlreq.responseType, xhtmlreq.responseXML);
                     Object.keys(data).forEach(function (key, index) {
                         item=document.createElement("div");
                         out.appendChild(item);
-                        item.textContent = "outerkey: " + key;
+
                         Object.keys(data[key]).forEach(function (key1, index1){
                             item = document.createElement("button");
                             out.appendChild(item);
 
-console.log("inner loop key: ", key1, "  index:", index1);
-                            item.textContent = key + "|" + key1 ;//"key: " + key1 + "  index: "+ index1 + "   principal: " + data[key][key1].principal + "   rate: " + data[key][key1].rate;
+                            item.textContent = key + " " + key1 ;
                             item.setAttribute("id",key + "-" + key1);
+                            item.keyValue = key + "|" + key1;
                             item.addEventListener('click',btnScenario);
 
                             // save data for session storage
@@ -129,22 +128,32 @@ console.log("inner loop key: ", key1, "  index:", index1);
     }
 }
 
-var delRecords = function(event, sScenarioName, sLoanType){
+var delRecords = function(event){
     try{
         event.preventDefault();
 
+        var sScenarioName = document.getElementById("scenario-name").value;
+        var sLoanType = document.getElementById("loan-type").value;
         var sUserID = localStorage.getItem('nerdherdcalc-userid');
-        if(sUserID === null || sUserID === ""){
-            return;
+        if(sUserID === null || 
+           sUserID === "" || 
+           typeof(sScenarioName) === undefined || 
+           sScenarioName === "" || 
+           sScenarioName === " " || 
+           sScenarioName === null ||
+           typeof(sLoanType) === undefined ||
+           sLoanType === "" ||
+           sLoanType === " " ||
+           sLoanType === null){
+              console.log('delete failed: user ID, scenario name, or loan type is not given.  User ID: ' + sUserID + '; scenario name: ' + sScenarioName + + '; loan type: ' + sLoanType + '.');
+              return false;
         }
         
-        var sScenarioName = document.getElementById("loan-name").value;
-        var sLoanType = document.getElementById("loan-type").value;
 
         // look in the local session storage for the item.  If not found, then return
-        var hold = sessionStorage.getItem(sScenarioName + sLoanType);
+        var hold = sessionStorage.getItem(sScenarioName + "|" + sLoanType);
         if (hold === null){
-            return;
+            return false;
         }
         
         // remove the record from the database and from local session storage.
@@ -157,16 +166,18 @@ var delRecords = function(event, sScenarioName, sLoanType){
             if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
 console.log("delete successful");
                 output.removeChild(document.getElementById(sScenarioName + "-" + sLoanType));
-                sessionStorage.removeItem(sScenarioName + sLoanType);
+                sessionStorage.removeItem(sScenarioName + "|" + sLoanType);
             }
         }
+        return true;
     }catch(exception){
+        return false;
     }
 }
 
 var newScenario = function(event){
     event.preventDefault();
-    document.getElementById("loan-name").value = "";
+    document.getElementById("scenario-name").value = "";
     document.getElementById("loan-type").value = ""; // car, home, other
     document.getElementById("rate").value = "";
     document.getElementById("principal").value = "";
@@ -183,8 +194,8 @@ var newScenario = function(event){
 var init = function(event){
     document.getElementById("add-records").addEventListener('click', saveScenario);
     document.getElementById("delete-records").addEventListener('click', delRecords);
-    document.getElementById("get-records").addEventListener('click', getRecord);
     document.getElementById("get-all-records").addEventListener('click', getAllRecords);
+
     document.getElementById("new").addEventListener('click', newScenario);
     document.getElementById("calculate").addEventListener('click', Calculate);
     

@@ -64,12 +64,19 @@ function ValidateEmail(mail){
     return false;
 } 
 
+function isValid(str){
+    if(/^[a-zA-Z0-9- ]*$/.test(str) === false) {
+        return false;
+    }
+    return true;
+}
+
 
 var saveScenario = function (event) {
     try{
         event.preventDefault();
         var item = {};
-        var sUserID = localStorage.getItem('nerherdcalc-userid');
+        var sUserID = localStorage.getItem('nerdherdcalc-userid');
 
         // if no previous user id, then prompt for it and store it as applicable.
         if(typeof(sUserID) === undefined || sUserID === null || 
@@ -97,15 +104,21 @@ var saveScenario = function (event) {
             }
         }
 
-        var sScenarioName = document.getElementById("loan-name");
-        if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === ""){
+        var sScenarioName = document.getElementById("scenario-name");
+
+        if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === "" || sScenarioName === " "){
             addClass(sScenarioName, "inError");
             alert("Scenario name cannot be blank.");
             return;
         }else{
-            removeClass(sScenarioName, "inError");
+            if(!isValid(sScenarioName.value)){
+                addClass(sScenarioName, "inError");
+                alert("Valid Scenario names may contain only A to Z (upper and lower case), and 0-9.  Please re-enter the scenario name.");
+                return;
+            }else{
+                removeClass(sScenarioName, "inError");
+            }
         }
-
         // attempt to add the records to firebase
 
         if(!addRecords()){
@@ -121,6 +134,7 @@ var saveScenario = function (event) {
             out.appendChild(item);
             item.textContent = sScenarioName.value + " " +  sType.value;  // put the scenario key as the button name
             item.setAttribute("id",sScenarioName.value + "-" + sType.value);
+            item.keyValue = sScenarioName.value + "|" + sType.value;
             item.addEventListener('click',btnScenario);// event handler
         }
     }catch( exception ){
@@ -134,7 +148,7 @@ function LoadScenario(key){
         
         var arrMyArr = key.split("|");
 
-        document.getElementById("loan-name").value = arrMyArr[0]; // scenario name
+        document.getElementById("scenario-name").value = arrMyArr[0]; // scenario name
         document.getElementById("loan-type").value = arrMyArr[1]; // car, home, other
         document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
         document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
@@ -153,8 +167,10 @@ var btnScenario = function(event) {
     try{
 console.log(event.target.textContent);
         
-        // get the button text -- it's the key 
-        var key = event.target.textContent;
+        removeClass(document.getElementById("scenario-name"), "inError");
+        
+        // get the button key 
+        var key = event.target.keyValue;
 
         LoadScenario(key);
     }catch(exception){
