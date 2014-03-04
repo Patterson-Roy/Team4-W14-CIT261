@@ -1,7 +1,158 @@
 <!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Nerd Herd Calculator</title>
+
+        <!-- Mobile Specific Metas
+        ================================================== -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <!-- CSS
+        ================================================== -->
+        <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen" />
+        <link href="css/main.css" type="text/css" rel="stylesheet" media="screen" />
+        <link href="css/layout.css" type="text/css" rel="stylesheet" media="screen" />
+
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Favicons
+        ================================================== -->
+        <link rel="shortcut icon" href="images/favicon.ico">
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+        
+    </head>
     <body>
-        <h1>Hello World</h1>
-        <p>I'm hosted with GitHub Pages.</p>
+        <section id="main" class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Loan Calculator</h3>
+                </div>
+            </div>
+            <div class="row">
+                <form id="loans" name="loan-calc">
+                    <fieldset>
+                        <div class="col-md-6">
+                            <label class="fieldlabel" for="scenario-name">Scenario Name:</label>
+                            <input class="field required" type="text" id="scenario-name" placeholder="Scenario Name"  size="15"><br/>
+
+                            <label class="fieldlabel" for="loan-type">Type of Loan:</label>
+                            <select name="loan-type" id="loan-type" class="field" autofocus>
+                                <option value="car">Car</option>
+                                <option value="home">Home</option>
+                                <option value="other">Other</option>
+                            </select><br/>
+
+                            <label class="fieldlabel" for="principal">Principal:</label>
+                            <input class="field required" type="text" id="principal" placeholder="principal amount" size="15"><br/>
+
+                            <label class="fieldlabel" for="rate">Interest Rate:</label>
+                            <input class="field required" type="text" id="rate" placeholder="interest rate" size="8"><br/>
+                            <label class="fieldlabel" for="periods">Periods:</label>
+                            <input class="field required" type="number" id="periods" placeholder="number of periods">
+                            <label for="period-type">for</label>
+                            <select name="period-id" id="period-type" class="field">
+                                <option value="mo">Month</option>
+                                <option value="qtr">Quarter</option>
+                                <option value="yr">Year</option>
+                            </select><br/>
+
+                        </div>
+                        <div class="col-md-6">
+
+                            <label class="fieldlabel" for="payment">Payment:</label>
+                            <input class="field required" type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
+
+                            <label class="fieldlabel" for="total">Loan Total:</label>
+                            <input class="field" type="text" id="total" size="15" disabled value="0.00"><br/>
+
+                            <label class="fieldlabel" for="interest-total">Interest Total:</label>
+                            <input class="field" type="text" id="interest-total" size="15" disabled value="0.00"><br/>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="calculate">Go</button>
+                    <button id="new">New</button>
+                    <button id="add-records">Save Scenario</button>
+                    <button id="delete-records">Delete Scenario</button>
+                    <button id="open-load-screen" data-toggle="modal" data-target="#load-screen" type="button">Load Scenario</button>
+                </div>
+            </div>
+        </section>
+        <section>
+            <button id="get-all-records">Get All</button>
+        </section>
+        <!-- This section is for the what-if scenario buttons -->
+        <section id="out">
+        </section>
+        
+<div class="modal fade" id="load-screen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="load-screenLabel">
+            Saved Scenarios
+          </h4>
+      </div>
+      <div class="modal-body">
+          
+                
+            
+            <div id="scenario-list" class="">
+                <!-- Reference Item 
+                <section class="scenario-item grLtBlu">
+                    <img src="images/icons/cash.png" >
+                    <div class="title">Computer Loan</div>
+                    Other / $3,000.00 / 4.36%
+                    <div class="btn-panel">
+                        <button type="button" class="btn btn-danger delete-scenario">Delete</button>
+                        <button type="button" class="btn btn-primary">Load</button>
+                    </div>
+                </section>
+                -->
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" id="btn-add-scenario" class="btn btn-primary" >Add Item</button>
+      </div>
+    </div>
+  </div>
+</div>        
+
+<div class="test">
+    <button type="button" onclick='createMessage(guid())'>Test Messages</button>
+</div>
+        
+<div id="msg-area">
+</div>
+        
+        <!-- JavaScript
+        ================================================== -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/utils.js" type="text/javascript"></script>
+        <script src="js/file-io.js" type="text/javascript"></script>
+        <script src="js/calculate.js" type="text/javascript"></script>
+        <script src="js/calculatepayment.js" type="text/javascript"></script>
+        <script src="js/calculateperiods.js" type="text/javascript"></script>
+        <script src="js/calculateprincipal.js" type="text/javascript"></script>
+        <script src="js/calculaterate.js" type="text/javascript"></script>
+        <script src="js/layout.js" type="text/javascript"></script>
+        
     </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    
+    </head>
+    <body>
+   <h1>Test Document with Web Storage</h2>
+    
+    <form id = "testForm">
+        <label>First Name:<input id="fname"></label>
+        <label>Last Name:<input id="lname"></label>
+        <label>Phone Number:<input id="phone"></label>
+        <label>Favorite Color:<input id="fcolor"></label>
+        <a href="#" id="submit">Save</a>
+    </form>
+        <h3>Saved information</h3>
+        <a href="#" id="retrieve">Retrieve User Info</a>
+        <div id='output'></div>
+
+        
+    <script>
+        var newUser = new Object();
+        var saveInfo = function(event){
+        event.preventDefault();
+            newUser.fname = document.getElementById("testForm").fname.value;
+            newUser.lname = document.getElementById("testForm").lname.value;
+            newUser.phone = document.getElementById("testForm").phone.value;
+            newUser.fcolor = document.getElementById("testForm").fcolor.value;
+            localStorage.setItem('newUser', JSON.stringify(newUser));
+        };
+        
+        var retrieveInfo = function(event){
+        event.preventDefault();
+            var strUser = localStorage.getItem('newUser');
+            var strUser2 = JSON.parse(strUser);
+            newUser = strUser2;
+            var output = document.getElementById("output");
+            output.textContent = newUser.fname + newUser.fcolor;
+        };
+ 
+        var init = function(){
+        document.getElementById('submit').addEventListener('click',saveInfo);
+        document.getElementById('retrieve').addEventListener('click',retrieveInfo);
+    };
+        
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+    </body>
+</html>
