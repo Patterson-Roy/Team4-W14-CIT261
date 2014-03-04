@@ -1,61 +1,8 @@
+// 
+// this javascript class was coded by Charles Jackson
+//
 
-var openModalID = null;
-
-/* function showModal
- * The purpose of this function is to take the given elementID, promote it to the foreground and 
- * to display the blackout screen behind it. preventing the user from interacting with any of the
- * other elements on the page./
- */
-function showModal(winID) {
-    
-    /*
-    
-    // check to see if the element is valid.
-    var win = document.getElementById(winID);
-    if (!(typeof(win) != 'undefined' && win != null))
-    {
-        // not exists.
-        alert("Selected modal cannot be found. (" + winID + ")" );
-        return;
-    }
-    
-    // check for the existance of the blackout screen on the page.
-    var blackout = document.getElementById("blackout");
-    if (!(typeof(blackout) != 'undefined' && blackout != null))
-    {
-        // not exists.
-        // alert("Blackout cannot be found, need to create." );
-        
-        blackout = document.createElement("div");
-        blackout.id = "blackout";
-        blackout.classList.add("transparent");
-        document.body.appendChild(blackout);
-    }
-            
-    // display the window on the screen
-    document.getElementById("main").classList.add('blur');
-    win.classList.remove('hidden');
-    win.classList.add('modal');
-    
-    openModalID = winID;
-    */
-}
-
-
-function hideModal() {
-    
-    var win = document.getElementById(openModalID);
-    if (typeof(win) != 'undefined' && win != null)
-    {
-
-        remove('blackout');
-        document.getElementById("main").classList.remove('blur');
-        win.classList.remove('modal');
-        win.classList.add('hidden');
-        
-    }
-    
-}
+/// Scenario Loading Screens
 
 // the unique id will be returned from the listerner method
 function addScenario( iconURL, name, type, value, apr, uniqueID )
@@ -115,7 +62,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
         scenarioDeleteButton.classList.add('btn-danger');
         scenarioDeleteButton.innerHTML = 'Delete';
         scenarioDeleteButton.setAttribute('type', 'button');
-        scenarioDeleteButton.addEventListener("click", function () { removeScenarioByElement( scenarioDeleteButton ) });
+        scenarioDeleteButton.addEventListener("click", removeScenarioByElement, false );
         scenarioButtonPanel.appendChild(scenarioDeleteButton);
 
         // add the button
@@ -129,9 +76,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
     
     newScenarioItem.appendChild(scenarioButtonPanel);
 
-    
-    
-    
+    // add item to the scenario list
     scenarioListWin.appendChild(newScenarioItem);
     
 }
@@ -139,13 +84,23 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
 // the unique id will be returned from the listerner method
 function removeScenarioByID( uniqueID )
 {
-    // 
+    var selElement = document.getElementById(uniqueID);
+    
+    if (!(typeof(selElement) != 'undefined' && selElement != null))
+    {
+        // not exists.
+        alert("The Selected Scenario cannot be found on the page" );
+        return;
+    }
+    
+    selElement.remove();
+
 }
 
-function removeScenarioByElement( btnElement )
+function removeScenarioByElement()
 {
     // find the parent scenario-item
-    selElement = btnElement.parentElement;
+    var selElement = this.parentElement;
     
     // find the parent item
     while (!selElement.classList.contains('scenario-item'))
@@ -153,14 +108,61 @@ function removeScenarioByElement( btnElement )
         selElement = selElement.parentElement;
     }
     
-    selElement.remove();
+    removeScenarioByID(selElement.id);
 }
 
-// utility
 
+/// Messaging system
+
+function createMessage ( msg )
+{
+    /*
+    <div id="msg-area">
+        <div class="sys-msg rounded-corners transparent">This is my message</div>        
+    </div>
+    */
+    // find the message area
+    msgArea = document.getElementById('msg-area');
+    msgCount = parseInt( msgArea.getAttribute('count') ) || 0;
+    msgArea.setAttribute( 'count', msgCount++ );
+    
+    var guidVal = guid();
+    
+    // this function will create a message on the screen 
+    newMessage = document.createElement('div');
+    newMessage.id = guidVal;
+    newMessage.classList.add('sys-msg');
+    newMessage.classList.add('rounded-corners');
+    newMessage.classList.add('transparent');
+    newMessage.innerHTML = msg;
+    msgArea.appendChild(newMessage);
+    
+    // hide the message after 5 seconds
+    setTimeout( function () { autoHideMessage(guidVal); }, 5000);
+    
+}
+
+function autoHideMessage( msgID )
+{
+    document.getElementById(msgID).remove();
+
+    msgArea = document.getElementById('msg-area');
+    msgCount = parseInt( msgArea.getAttribute('count') );
+    msgArea.setAttribute( 'count', msgCount-- );
+}
+
+/// utility functions
+
+/*
 function remove(id)
 {
     return (elem=document.getElementById(id)).parentNode.removeChild(elem);
+}
+*/
+
+function guid() {
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+         s4() + '-' + s4() + s4() + s4();
 }
 
 function s4() {
@@ -169,13 +171,5 @@ function s4() {
              .substring(1);
 };
 
-function guid() {
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-         s4() + '-' + s4() + s4() + s4();
-}
-
 // Event listeners
-// document.getElementById("open-load-screen").addEventListener("click", function () { showModal("load-screen") });
-// document.getElementById("close-modal").addEventListener("click", function () { hideModal() });
-
-document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("cash.png", "new Item", "Auto", "$3,000.00", "4.65%", guid() ) });
+document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
