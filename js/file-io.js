@@ -140,34 +140,3 @@ console.log("delete successful");
         return false;
     }
 }
-
-var newScenario = function(event){
-    event.preventDefault();
-    document.getElementById("scenario-name").value = "";
-    document.getElementById("loan-type").value = ""; // car, home, other
-    document.getElementById("rate").value = "";
-    document.getElementById("principal").value = "";
-    document.getElementById("periods").value = "";
-    document.getElementById("period-type").value = ""; // month, quarter, year
-    document.getElementById("payment").value = "";
-    document.getElementById("total").value = "";
-    document.getElementById("interest-total").value = "";
-    
-}
-
-
-
-var init = function(event){
-    document.getElementById("add-records").addEventListener('click', saveScenario);
-    document.getElementById("delete-records").addEventListener('click', delRecords);
-    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
-
-    document.getElementById("new").addEventListener('click', newScenario);
-    document.getElementById("calculate").addEventListener('click', Calculate);
-    
-    document.getElementById("principal").addEventListener('change', fmtPrinc);
-    document.getElementById("total").addEventListener('change', fmtTotal);
-    document.getElementById("interest-total").addEventListener('change', fmtTotInt);
-}
-
-document.addEventListener("DOMContentLoaded",init);
