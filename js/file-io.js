@@ -32,9 +32,8 @@ function addRecords () {
         data.payment = fPayment.replace( /,/g, "" ); // strip any commas
         data.total = fTotal.replace(/,/g,""); // strip any commas
         data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
-        
-        // window.btoa is a base64 converter for use with firebase IO.
-        xhtmlreq.open("PUT","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + "/" + window.btoa(sScenarioName) + "/" + sLoanType + ".json",true);
+
+        xhtmlreq.open("PUT","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/" + sScenarioName + "/" + sLoanType + ".json",true);
         xhtmlreq.setRequestHeader("Content-Type", "application/json");
         xhtmlreq.send(JSON.stringify(data));
 
@@ -42,10 +41,44 @@ function addRecords () {
         sessionStorage.setItem(sScenarioName + "|" + sLoanType,JSON.stringify(data));
         return true;
     }catch(exception){
-        console.log(exception);
         return false;
     }
 }
+
+
+//var getRecord = function (event) {
+//    event.preventDefault();
+//    
+//    var sUserID = localStorage.getItem('nerdherdcalc-userid');
+//    if(sUserID === null || sUserID === "")
+//        return;
+//
+//    
+//    var sScenarioName = document.getElementById("scenario-name").value;
+//    var sLoanType = document.getElementById("loan-type").value;
+//    
+//    var xhtmlreq= new XMLHttpRequest();
+//    xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType +".json");
+//    
+//    xhtmlreq.send(null);
+//    xhtmlreq.onreadystatechange = function(){
+//        if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
+//            var data = JSON.parse(xhtmlreq.responseText);
+//            var output = document.getElementById("output");
+//            if(typeof(data) !== "undefined" && data !== null){
+//                document.getElementById("scenario-name").value = sScenarioName;
+//                document.getElementById("loan-type").value = sLoanType; // car, home, other
+//                document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
+//                document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
+//                document.getElementById("periods").value = parseInt(data.term);
+//                document.getElementById("period-type").value = data.periodtype; // month, quarter, year
+//                document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
+//                document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
+//                document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
+//            }
+//        }
+//    }
+//}
 
 
 var getAllRecords = function (event) {
@@ -62,8 +95,7 @@ var getAllRecords = function (event) {
         var item = {};
 
         var xhtmlreq= new XMLHttpRequest();
-        // window.btoa is a base64 converter for use with firebase IO.
-        xhtmlreq.open("GET","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + ".json");
+        xhtmlreq.open("GET","https://flickering-fire-5311.firebaseio.com/" + sUserID + ".json");
 
         xhtmlreq.send(null);
         xhtmlreq.onreadystatechange = function(){
@@ -80,23 +112,19 @@ var getAllRecords = function (event) {
                             item = document.createElement("button");
                             out.appendChild(item);
 
-                            // window.atob is converter from base64 back to base 16.
-                            sSessionKey = window.atob(key);
-                            
-                            item.textContent = sSessionKey + " " + key1 ;
-                            item.setAttribute("id",sSessionKey + "-" + key1);
-                            item.keyValue = sSessionKey + "|" + key1;
+                            item.textContent = key + " " + key1 ;
+                            item.setAttribute("id",key + "-" + key1);
+                            item.keyValue = key + "|" + key1;
                             item.addEventListener('click',btnScenario);
 
                             // save data for session storage
-                            sessionStorage.setItem(sSessionKey + '|' +  key1,JSON.stringify(data[key][key1]));
+                            sessionStorage.setItem(key + '|' +  key1,JSON.stringify(data[key][key1]));
                         });
                     });
                 }
             }
         }
     }catch(exception){
-        console.log(exception);
     }
 }
 
@@ -132,8 +160,7 @@ var delRecords = function(event){
 
         var xhtmlreq = new XMLHttpRequest();
         var output = document.getElementById("out");
-        // the window.btoa is a base64 converter.  This conversion is for the Firebase table IO.
-        xhtmlreq.open("DELETE","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + "/"+ window.btoa(sScenarioName) + "/" + sLoanType + ".json");
+        xhtmlreq.open("DELETE","https://flickering-fire-5311.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType + ".json");
         xhtmlreq.send(null);
         xhtmlreq.onreadystatechange = function(){
             if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
@@ -144,8 +171,37 @@ console.log("delete successful");
         }
         return true;
     }catch(exception){
-        console.log(exception);
         return false;
     }
 }
 
+var newScenario = function(event){
+    event.preventDefault();
+    document.getElementById("scenario-name").value = "";
+    document.getElementById("loan-type").value = ""; // car, home, other
+    document.getElementById("rate").value = "";
+    document.getElementById("principal").value = "";
+    document.getElementById("periods").value = "";
+    document.getElementById("period-type").value = ""; // month, quarter, year
+    document.getElementById("payment").value = "";
+    document.getElementById("total").value = "";
+    document.getElementById("interest-total").value = "";
+    
+}
+
+
+
+var init = function(event){
+    document.getElementById("add-records").addEventListener('click', saveScenario);
+    document.getElementById("delete-records").addEventListener('click', delRecords);
+    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
+
+    document.getElementById("new").addEventListener('click', newScenario);
+    document.getElementById("calculate").addEventListener('click', Calculate);
+    
+    document.getElementById("principal").addEventListener('change', fmtPrinc);
+    document.getElementById("total").addEventListener('change', fmtTotal);
+    document.getElementById("interest-total").addEventListener('change', fmtTotInt);
+}
+
+document.addEventListener("DOMContentLoaded",init);
