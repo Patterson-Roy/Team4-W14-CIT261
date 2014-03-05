@@ -45,42 +45,6 @@ function addRecords () {
     }
 }
 
-
-//var getRecord = function (event) {
-//    event.preventDefault();
-//    
-//    var sUserID = localStorage.getItem('nerdherdcalc-userid');
-//    if(sUserID === null || sUserID === "")
-//        return;
-//
-//    
-//    var sScenarioName = document.getElementById("scenario-name").value;
-//    var sLoanType = document.getElementById("loan-type").value;
-//    
-//    var xhtmlreq= new XMLHttpRequest();
-//    xhtmlreq.open("GET","https://blistering-fire-7540.firebaseio.com/" + sUserID + "/"+ sScenarioName + "/" + sLoanType +".json");
-//    
-//    xhtmlreq.send(null);
-//    xhtmlreq.onreadystatechange = function(){
-//        if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-//            var data = JSON.parse(xhtmlreq.responseText);
-//            var output = document.getElementById("output");
-//            if(typeof(data) !== "undefined" && data !== null){
-//                document.getElementById("scenario-name").value = sScenarioName;
-//                document.getElementById("loan-type").value = sLoanType; // car, home, other
-//                document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
-//                document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
-//                document.getElementById("periods").value = parseInt(data.term);
-//                document.getElementById("period-type").value = data.periodtype; // month, quarter, year
-//                document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
-//                document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
-//                document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
-//            }
-//        }
-//    }
-//}
-
-
 var getAllRecords = function (event) {
     try{
         event.preventDefault();
