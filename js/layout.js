@@ -137,8 +137,12 @@ function createMessage ( msg )
     newMessage.innerHTML = msg;
     msgArea.appendChild(newMessage);
     
+    Document.getElementById( guidVal ).classList.add( "show" );
+    
     // hide the message after 5 seconds
     setTimeout( function () { autoHideMessage(guidVal); }, 5000);
+    
+    
     
 }
 

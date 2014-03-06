@@ -85,6 +85,8 @@ var getAllRecords = function (event) {
                             item.keyValue = sScenarioName + "|" + sLoanType;
                             item.addEventListener('click',btnScenario);
 
+                            // -- code to add the scenario to the load window
+                            //          image, name,       loan type, loan amount, apr, uniqueID (javascript ref, no spaces)
                             addScenario("", sScenarioName, sLoanType, "3,000", "__", window.btoa(sScenarioName));
                             
                             // save data for session storage
