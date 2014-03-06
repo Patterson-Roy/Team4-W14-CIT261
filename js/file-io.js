@@ -70,13 +70,14 @@ var getAllRecords = function (event) {
                     // data is an Object type.  The keys is an inherited function of Object that returns an array of keys to that object.
                     // we can do a forEach on the data object this way to get the parts and pieces we need for the app.
                     Object.keys(data).forEach(function (key, index) {
+                                                
                         item=document.createElement("div");
                         out.appendChild(item);
 
                         Object.keys(data[key]).forEach(function (sLoanType, index1){
                             item = document.createElement("button");
                             out.appendChild(item);
-                            
+
                             var sScenarioName = window.atob(key);
 
                             item.textContent = sScenarioName + " " + sLoanType ;
@@ -84,6 +85,8 @@ var getAllRecords = function (event) {
                             item.keyValue = sScenarioName + "|" + sLoanType;
                             item.addEventListener('click',btnScenario);
 
+                            addScenario("", sScenarioName, sLoanType, "3,000", "__", window.btoa(sScenarioName));
+                            
                             // save data for session storage
                             sessionStorage.setItem(sScenarioName + '|' +  sLoanType,JSON.stringify(data[key][sLoanType]));
                         });
