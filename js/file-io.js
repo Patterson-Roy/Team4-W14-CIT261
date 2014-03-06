@@ -1,6 +1,7 @@
 function addRecords () {
     try{
-        var sUserID = localStorage.getItem('nerdherdcalc-userid');
+        var sUserID = GetUserID();
+
         var sScenarioName = document.getElementById("scenario-name").value;
         if(sUserID === null || 
            sUserID === "" || 
@@ -48,8 +49,8 @@ function addRecords () {
 var getAllRecords = function (event) {
     try{
         event.preventDefault();
+        var sUserID = GetUserID();
 
-        var sUserID = localStorage.getItem('nerdherdcalc-userid');
         if(sUserID === null || sUserID === "")
             return;
 
@@ -96,11 +97,12 @@ var getAllRecords = function (event) {
 
 var delRecords = function(event){
     try{
+        var sUserID = GetUserID();
         event.preventDefault();
 
+        
         var sScenarioName = document.getElementById("scenario-name").value;
         var sLoanType = document.getElementById("loan-type").value;
-        var sUserID = localStorage.getItem('nerdherdcalc-userid');
         if(sUserID === null || 
            sUserID === "" || 
            typeof(sScenarioName) === undefined || 

@@ -83,13 +83,20 @@ function removeClass(el, name)
 //   }
 }
 
-
+function GetUserID (){
+    try{
+        return localStorage.getItem('nerdherdcalc-userid');
+    }catch(exception){
+        return null;
+    }
+};
 
 var saveScenario = function (event) {
     try{
+        var sUserID = GetUserID();
+
         event.preventDefault();
         var item = {};
-        var sUserID = localStorage.getItem('nerdherdcalc-userid');
 
         // if no previous user id, then prompt for it and store it as applicable.
         if(typeof(sUserID) === undefined || sUserID === null || 
@@ -157,7 +164,7 @@ var saveScenario = function (event) {
 
 function LoadScenario(key){
     try{
-        var data = JSON.parse(sessionStorage.getItem(key));
+        var data = JSON.parse(window.sessionStorage.getItem(key));
         
         var arrMyArr = key.split("|");
 
