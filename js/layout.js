@@ -133,17 +133,23 @@ function createMessage ( msg )
     newMessage.id = guidVal;
     newMessage.classList.add('sys-msg');
     newMessage.classList.add('rounded-corners');
-    newMessage.classList.add('transparent');
+    // newMessage.classList.add('transparent');
+    // newMessage.classList.add('fade');
     newMessage.innerHTML = msg;
     msgArea.appendChild(newMessage);
     
-    Document.getElementById( guidVal ).classList.add( "show" );
+    // fadeIn
+    setTimeout( function () { fadeOut(guidVal); }, 1000);    
     
     // hide the message after 5 seconds
-    setTimeout( function () { autoHideMessage(guidVal); }, 5000);
+    // setTimeout( function () { autoHideMessage(guidVal); }, 5000);
     
     
     
+}
+
+function fadeOut ( msgID ) {
+    document.getElementById( msgID ).classList.add( "fade" );
 }
 
 function autoHideMessage( msgID )

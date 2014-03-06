@@ -1,0 +1,11 @@
+.fade {
+    transition: opacity .25s 2s ease-in-out;
+    -moz-transition: opacity .25s 2s ease-in-out;
+    -webkit-transition: opacity .25s 2s ease-in-out;
+    opacity:.5 !important;
+}
+
+.fade:hover {
+  opacity:0 !important;
+}
+
