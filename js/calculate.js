@@ -6,8 +6,7 @@ function Calculate () {
     var periods = parseFloat(document.getElementById("periods").value.replace(/,/g, ""));
     var ppy = parseFloat(calcPeriodsPerYear());
     var payment = parseFloat(document.getElementById("payment").value.replace(/,/g, ""));
-
-    
+  
         switch (this.whatToCalculate){
                 case "principal":
                     CalcPrincipal(rate, periods, ppy, payment);
@@ -22,7 +21,7 @@ function Calculate () {
                     return;
                 
                 case "rate":
-                    CalcRate(principal, payment, periods);
+                    CalcRate(principal, payment, ppy, periods);
                     return;
                 
                 default:
@@ -38,7 +37,7 @@ function Calculate () {
 function CalcPrincipal(rate, periods, ppy, payment) {
     var totalPrincipal = (payment * (1- Math.pow((1+(rate/ppy)), -periods))) / (rate/ppy);
     totalPrincipal = totalPrincipal.toFixed(2);
-    document.getElementById("principal").value = NumberWithCommas(totalPrincipal);
+    document.getElementById("principal").value = totalPrincipal;
     
     //Calculate principal plus interest giving loan total and loan interest total
     var paymentInt = payment + (payment * rate);
@@ -48,18 +47,18 @@ function CalcPrincipal(rate, periods, ppy, payment) {
     var loanInt = totalInt - totalPrincipal;
     loanInt = parseFloat(loanInt);
     
-    totalInt = Math.round(totalInt).toFixed(2);
-    loanInt = Math.round(loanInt).toFixed(2);
+    totalInt = totalInt.toFixed(2);
+    loanInt = loanInt.toFixed(2);
     
-    document.getElementById('total').value = NumberWithCommas(totalInt);
-    document.getElementById('interest-total').value = NumberWithCommas(loanInt);
+    document.getElementById('total').value = totalInt;
+    document.getElementById('interest-total').value =loanInt;
     return;
 }
     
 function CalcPayment(principal, rate, periods, ppy) {
 var payment = (principal*(rate/ppy)) / (1- Math.pow((1+(rate/ppy)), -periods));
 payment = payment.toFixed(2);
-    document.getElementById("payment").value = NumberWithCommas(payment);
+    document.getElementById("payment").value = payment;
     
         //Calculate principal plus interest giving loan total and loan interest total
     var paymentInt = payment + (payment * rate);
@@ -69,11 +68,11 @@ payment = payment.toFixed(2);
     var loanInt = totalInt - principal;
     loanInt = parseFloat(loanInt);
     
-    totalInt = Math.round(totalInt).toFixed(2);
-    loanInt = Math.round(loanInt).toFixed(2);
+    totalInt = totalInt.toFixed(2);
+    loanInt = loanInt.toFixed(2);
     
-    document.getElementById('total').value = NumberWithCommas(totalInt);
-    document.getElementById('interest-total').value = NumberWithCommas(loanInt);
+    document.getElementById('total').value = totalInt;
+    document.getElementById('interest-total').value = loanInt;
     return;
 }
 
@@ -93,15 +92,16 @@ function CalcPeriods(principal, rate, ppy, payment) {
     var loanInt = totalInt - principal;
     loanInt = parseFloat(loanInt);
     
-    totalInt = Math.round(totalInt).toFixed(2);
-    loanInt = Math.round(loanInt).toFixed(2);
+    totalInt = totalInt.toFixed(2);
+    loanInt = loanInt.toFixed(2);
     
-    document.getElementById('total').value = NumberWithCommas(totalInt);
-    document.getElementById('interest-total').value = NumberWithCommas(loanInt);
+    document.getElementById('total').value = totalInt;
+    document.getElementById('interest-total').value = loanInt;
     return;
 }
 
-function CalcRate(principal, payment, periods) {
+function CalcRate(principal, payment, ppy, periods) {
+    
     var rate = 1.001;
     var total = 0;
     while(Math.abs(total)<principal){
@@ -109,23 +109,23 @@ function CalcRate(principal, payment, periods) {
         if(rate <= 0) break;
         total = payment *((1-Math.pow(1+rate,-periods))/rate);
     }
-    rate = (rate * 100 * periods) + .005;
+    rate = (rate * 100 * ppy) + .005;
     rate = parseFloat(rate.toFixed(3));
     document.getElementById("rate").value = rate;
     
                 //Calculate principal plus interest giving loan total and loan interest total
-    var paymentInt = payment + (payment * rate);
+    var paymentInt = payment + (payment * (rate/100));
     paymentInt = parseFloat(paymentInt);
     var totalInt = paymentInt * periods;
      totalInt = parseFloat(totalInt);
     var loanInt = totalInt - principal;
     loanInt = parseFloat(loanInt);
     
-    totalInt = Math.round(totalInt).toFixed(2);
-    loanInt = Math.round(loanInt).toFixed(2);
+    totalInt = totalInt.toFixed(2);
+    loanInt = loanInt.toFixed(2);
     
-    document.getElementById('total').value = NumberWithCommas(totalInt);
-    document.getElementById('interest-total').value = NumberWithCommas(loanInt);
+    document.getElementById('total').value = totalInt;
+    document.getElementById('interest-total').value = loanInt;
     return;
 }
 

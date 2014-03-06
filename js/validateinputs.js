@@ -35,12 +35,13 @@ function validateInputs() {
     var arr = [];
     arr = Array.prototype.slice.call(document.getElementsByClassName("required"));
     for(var i = 1; i < arr.length; i++){
-        arr[i].value = Number(arr[i].value.replace( /,/g, "" ));
-        if(arr[i].value < 0 || !typeof(arr[i].value) === "number"){
+        arr[i].value = arr[i].value.replace( /,/g, "" )
+        arr[i].value = Number(arr[i].value);
+        if(isNaN(arr[i].value) || arr[i].value < 0){
         alert("Please enter correct integer values.");
             return false;
         }else{
-        arr[i].value = NumberWithCommas(arr[i].value);
+        return true;
         }
     }
                 return true;
