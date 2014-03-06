@@ -60,16 +60,27 @@ function hasClass(el, name) {
    return new RegExp('(\\s|^)'+name+'(\\s|$)').test(el.className);
 }
 
-function addClass(el, name)
-{
-   if (!hasClass(el, name)) { el.className += (el.className ? ' ' : '') +name; }
+function addClass(el, name){
+    // remove all instances of the class first
+    removeClass(el,name);
+//    while(el.classList.contains(name)){
+//       el.classList.remove(name);
+//    }
+    // now add the class
+    el.classList.add(name);
+
+//   if (!hasClass(el, name)) { el.className += (el.className ? ' ' : '') +name; }
 }
 
 function removeClass(el, name)
 {
-   if (hasClass(el, name)) {
-      el.className=el.className.replace(new RegExp('(\\s|^)'+name+'(\\s|$)'),' ').replace(/^\s+|\s+$/g, '');
-   }
+    // remove all instances of the class first
+    while(el.classList.contains(name)){
+       el.classList.remove(name);
+    }
+//   if (hasClass(el, name)) {
+//      el.className=el.className.replace(new RegExp('(\\s|^)'+name+'(\\s|$)'),' ').replace(/^\s+|\s+$/g, '');
+//   }
 }
 
 
@@ -118,7 +129,7 @@ var saveScenario = function (event) {
                 alert("Valid Scenario names may contain only A to Z (upper and lower case), and 0-9.  Please re-enter the scenario name.");
                 return;
             }else{
-                removeClass(sScenarioName, "inError");
+                removeClass(sScenarioName, 'inError');
             }
         }
         // attempt to add the records to firebase
@@ -182,13 +193,22 @@ console.log(event.target.textContent);
 
 var newScenario = function(event){
     event.preventDefault();
+    var sClass = 'inError';
     document.getElementById("scenario-name").value = "";
+    removeClass(document.getElementById("scenario-name"),sClass);
     document.getElementById("loan-type").value = "car"; // car, home, other
+    removeClass(document.getElementById("loan-type"),sClass);
     document.getElementById("rate").value = "";
+    removeClass(document.getElementById("rate"),sClass);
     document.getElementById("principal").value = "";
+    removeClass(document.getElementById("principal"),sClass);
     document.getElementById("periods").value = "";
+    removeClass(document.getElementById("periods"),sClass);
     document.getElementById("period-type").value = "mo"; // month, quarter, year
+    removeClass(document.getElementById("period-type"),sClass);
     document.getElementById("payment").value = "";
+    removeClass(document.getElementById("payment"),sClass);
+
     document.getElementById("total").value = "";
     document.getElementById("interest-total").value = "";
     

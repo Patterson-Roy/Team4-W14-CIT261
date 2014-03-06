@@ -32,8 +32,21 @@ label.fieldlabel{
 
 .inError{
     background-color: red !important; 
-/*    border: 5px solid red !important;*/
+    animation: pulsate 1.3s;
+    -webkit-animation: pulsate 1.3s;
+    -webkit-animation-iteration-count: 2;
 }
+
+@keyframes pulsate{
+    from {background: white;}
+    to {background: red;}
+}
+
+@-webkit-keyframes pulsate {
+    from {background:white;}
+    to {background:red;}
+}
+
 
 .green {
     background: green;
