@@ -139,10 +139,10 @@ function createMessage ( msg )
     msgArea.appendChild(newMessage);
     
     // fadeIn
-    setTimeout( function () { fadeOut(guidVal); }, 1000);    
+    setTimeout( function () { fadeOut(guidVal); }, 500);    
     
     // hide the message after 5 seconds
-    // setTimeout( function () { autoHideMessage(guidVal); }, 5000);
+    setTimeout( function () { autoHideMessage(guidVal); }, 5000);
     
     
     
