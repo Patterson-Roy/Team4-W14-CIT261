@@ -36,7 +36,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
     // add the items to the scenario item
     scenarioImg = document.createElement("img");
     scenarioImg.id = uniqueID + "_img";
-    scenarioImg.setAttribute('src', 'images/icons/cash.png');
+    scenarioImg.setAttribute('src', iconURL);//'images/icons/cash.png');
     newScenarioItem.appendChild(scenarioImg);
     
     // add the title
