@@ -223,5 +223,10 @@ function s4() {
              .substring(1);
 };
 
+
+/// Test Nav - a collection of elements that are used for testing the methods directly.
+
+
+
 // Event listeners
-document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
+document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("images/icons/cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
