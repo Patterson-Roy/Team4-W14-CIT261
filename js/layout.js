@@ -113,8 +113,11 @@ function removeScenarioByElement()
 
 
 /// Messaging system
+// this function will create a system messages at the bottome of the screen. 
+// msg:     The message that you would like to show on the message
+// type:    The type of message, 1 info, 2 warning, 3 error
 
-function createMessage ( msg )
+function createMessage ( msg, type )
 {
     /*
     <div id="msg-area">
@@ -133,32 +136,71 @@ function createMessage ( msg )
     newMessage.id = guidVal;
     newMessage.classList.add('sys-msg');
     newMessage.classList.add('rounded-corners');
+    
+    if (type == 1)
+    {
+        newMessage.classList.add('info');
+    } 
+    else if (type == 2)
+    {
+        newMessage.classList.add('warning');
+    } 
+    else if (type == 3)
+    {
+        newMessage.classList.add('error');
+        newMessage.classList.add('man-close');
+        closeBtn = document.createElement('div');
+        closeBtn.classList.add('closeBtn')
+        closeBtn.innerHTML = "X";
+        newMessage.appendChild( closeBtn );
+    }
     // newMessage.classList.add('transparent');
     // newMessage.classList.add('fade');
-    newMessage.innerHTML = msg;
+    newMessage.innerHTML += msg;
     msgArea.appendChild(newMessage);
     
     // fadeIn
-    setTimeout( function () { fadeOut(guidVal); }, 500);    
-    
-    // hide the message after 5 seconds
-    setTimeout( function () { autoHideMessage(guidVal); }, 5000);
-    
-    
+    setTimeout( function () { fadeIn(guidVal); }, 500);    
     
 }
 
-function fadeOut ( msgID ) {
-    document.getElementById( msgID ).classList.add( "fade" );
+function fadeIn ( msgID ) {
+    msg = document.getElementById( msgID );
+    msg.classList.add( "fade" );
+    
+    if (!msg.classList.contains("man-close"))
+    {
+        // hide the message after 5 seconds
+        setTimeout( function () { autoHideMessage(msgID); }, 5000);
+    }
+    else 
+    {
+        // add the close event listener
+        msg.addEventListener('click', manCloseMsg);
+    }
+}
+                             
+function manCloseMsg ()
+{
+    autoHideMessage(this.id);
 }
 
 function autoHideMessage( msgID )
+{
+    document.getElementById( msgID ).classList.add( "remove" );    
+
+    // schedule item to be removed.
+    setTimeout( function () { removeMessage(msgID); }, 500);
+}
+
+function removeMessage ( msgID )
 {
     document.getElementById(msgID).remove();
 
     msgArea = document.getElementById('msg-area');
     msgCount = parseInt( msgArea.getAttribute('count') );
     msgArea.setAttribute( 'count', msgCount-- );
+    
 }
 
 /// utility functions

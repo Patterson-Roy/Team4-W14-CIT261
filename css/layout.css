@@ -76,14 +76,41 @@
     color: #fff;
     margin-bottom: 5px;
     opacity: .0;
+    position: relative;
+    padding: 5px;
 }
 
+#msg-area .sys-msg.info {
+    background-color: lightblue;
+    color: #000;
+}
+
+#msg-area .sys-msg.warning {
+    background-color: yellow;
+    color: #000;
+}
+
+#msg-area .sys-msg.error {
+    background-color: red;
+    color: white;
+    cursor: pointer;
+}
+
+
+
 /* shared styles */
+
+.closeBtn {
+    float: right;
+    margin: 5px;
+    margin-top: 2px;
+}
+
 .rounded-corners {
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px; /* future proofing */
-    -khtml-border-radius: 10px; /* for old Konqueror browsers */
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    border-radius: 15px; /* future proofing */
+    -khtml-border-radius: 15px; /* for old Konqueror browsers */
 }
 
 .blur {

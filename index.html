@@ -135,7 +135,9 @@
         </div>        
 
         <div class="test">
-            <button type="button" onclick='createMessage(guid())'>Test Messages</button>
+            <button type="button" onclick='createMessage(guid(), 1)'>Info Test Messages</button>
+            <button type="button" onclick='createMessage(guid(), 2)'>Warning Test Messages</button>
+            <button type="button" onclick='createMessage(guid() + guid() + guid() + guid(), 3)'>Error Test Messages</button>
         </div>
 
         <div id="msg-area">
