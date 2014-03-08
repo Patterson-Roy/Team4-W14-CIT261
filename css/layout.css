@@ -1,3 +1,9 @@
+/*// main screen styling */
+
+body {
+    padding: 10px;
+}
+
 /*// Scenario Loading Screen */
 
 #load-screen .modal-body {
@@ -96,7 +102,53 @@
     cursor: pointer;
 }
 
+/* test nav */
 
+#show-btn {
+    position: absolute;
+    right: -70px;
+    /* right: 10px; */
+    background-color: #000;
+    color: white;
+    height: 35px;
+    padding: 5px;
+    bottom: 50px;
+    
+    cursor: pointer;
+    
+    /* round corners */
+    -moz-border-top-left-radius: 5px;
+    -mox-border-top-right-radius: 5px;
+
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    
+    -khtml-border-top-left-radius: 5px;
+    -khtml-border-top-right-radius: 5px;
+    
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg); /* IE 9 */
+    -webkit-transform:rotate(90deg); /* Opera, Chrome, and Safari */
+    
+}
+
+#test-nav {
+    position: fixed;
+    top: 0;
+    left: -49%;
+    width: 50%;
+    background-color: #e6e6e6;
+    height: 100%;
+    padding: 10px;
+    border-right: 5px solid #000;
+}
+
+#test-nav.show {
+    left: 0;
+}
 
 /* shared styles */
 

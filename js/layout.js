@@ -226,7 +226,17 @@ function s4() {
 
 /// Test Nav - a collection of elements that are used for testing the methods directly.
 
-
+function toggleTestingTools () 
+{
+    testNav = document.getElementById("test-nav");
+    if (testNav.classList.contains("show"))
+    {
+        testNav.classList.remove("show");
+    } else {
+        testNav.classList.add("show");
+    };
+};
 
 // Event listeners
 document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("images/icons/cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
+document.getElementById("show-btn").addEventListener("click", function() { toggleTestingTools() });

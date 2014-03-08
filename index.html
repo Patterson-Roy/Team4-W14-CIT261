@@ -88,7 +88,6 @@
                     <button id="new">New</button>
                     <button id="add-records">Save Scenario</button>
                     <button id="delete-records">Delete Scenario</button>
-                    <button id="open-load-screen" data-toggle="modal" data-target="#load-screen" type="button">Load Scenario</button>
                 </div>
             </div>
         </section>
@@ -134,10 +133,18 @@
           </div>
         </div>        
 
-        <div class="test-nav">
-            <button type="button" onclick='createMessage(guid(), 1)'>Info Test Messages</button>
-            <button type="button" onclick='createMessage(guid(), 2)'>Warning Test Messages</button>
-            <button type="button" onclick='createMessage(guid() + guid() + guid() + guid(), 3)'>Error Test Messages</button>
+        <div id="test-nav">
+            <div id="show-btn">Testing Tools</div>
+                <div class="attribute-group">
+                    <h4>Message Testing</h4>
+                    <button type="button" onclick='createMessage(guid(), 1)'>Info Test Messages</button>
+                    <button type="button" onclick='createMessage(guid(), 2)'>Warning Test Messages</button>
+                    <button type="button" onclick='createMessage(guid() + guid() + guid() + guid(), 3)'>Error Test Messages</button>
+                </div>
+                <div class="attribute-group">
+                    <h4>Scenario Testing</h4>
+                    <button id="open-load-screen" data-toggle="modal" data-target="#load-screen" type="button">Load Scenario</button>
+                </div>
         </div>
 
         <div id="msg-area">
