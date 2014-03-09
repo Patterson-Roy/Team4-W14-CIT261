@@ -17,11 +17,11 @@ label.fieldlabel{
 }
 
 .rnd-btn{
-    height: 2.2em;
-    width: 5em;
+    height: 2.2em!important;
+    width: 8em!important;
     border-radius: 5px;
-    box-shadow: 3px 3px 9px darkgrey;
-    margin: 2px 0 0 3em;
+/*    box-shadow: 3px 3px 9px darkgrey;*/
+    margin: 2px 0 0 1em;
 }
 
 .rnd-btn:hover{
@@ -73,6 +73,49 @@ label.fieldlabel{
      border:1px solid #000;
      padding:1em;
      text-align:center;
+}
+
+#deleteButton:after{
+    content: "Delete";
+}
+#newButton:after{
+    content: "New";
+}
+#saveButton:after{
+    content: "Save";
+}
+#goButton:after{
+    content: "Go";
+}
+#open-load-screen:after{
+    content: "Scenario List";
+}
+#scenario-name-label:after{
+    content: "Scenario Name:";
+}
+#loan-type-label:after{
+    content: "Loan Type:";
+}
+#principal-label:after{
+    content: "Principal:";
+}
+#rate-label:after{
+    content: "Rate:";
+}
+#periods-label:after{
+    content: "Periods:"
+}
+#period-type-label:after{
+    content: "for";
+}
+#payment-label:after{
+    content: "Payment:"
+}
+#total-label:after{
+    content: "Total:";
+}
+#interest-total-label:after{
+    content: "Total Interest:"
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape){

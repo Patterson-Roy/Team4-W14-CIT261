@@ -220,15 +220,15 @@ var newScenario = function(event){
 
 
 var init = function(event){
-    document.getElementById("add-records").addEventListener('click', saveScenario);
-    document.getElementById("delete-records").addEventListener('click', delRecords);
+    document.getElementById("saveButton").addEventListener('click', saveScenario);
+    document.getElementById("deleteButton").addEventListener('click', delRecords);
     document.getElementById("get-all-records").addEventListener('click', getAllRecords);
     document.getElementById("open-load-screen").addEventListener('click', getAllRecords);
     
     
 
-    document.getElementById("new").addEventListener('click', newScenario);
-    document.getElementById("calculate").addEventListener('click', btnGo);
+    document.getElementById("newButton").addEventListener('click', newScenario);
+    document.getElementById("goButton").addEventListener('click', btnGo);
     
     document.getElementById("principal").addEventListener('change', fmtPrinc);
     document.getElementById("total").addEventListener('change', fmtTotal);
