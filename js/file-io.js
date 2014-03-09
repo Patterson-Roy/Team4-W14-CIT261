@@ -123,7 +123,7 @@ var delRecords = function(event){
            sLoanType === "" ||
            sLoanType === " " ||
            sLoanType === null){
-              console.log('delete failed: user ID, scenario name, or loan type is not given.  User ID: ' + sUserID + '; scenario name: ' + sScenarioName + + '; loan type: ' + sLoanType + '.');
+              console.log('delete failed: user ID, scenario name, or loan type is not given or does not exist in the data base.  User ID: ', sUserID , '; scenario name: ', sScenarioName, '; loan type: ', sLoanType, '.');
               return false;
         }
         
@@ -149,6 +149,7 @@ console.log("delete successful");
         }
         return true;
     }catch(exception){
+        console.log('delete failed: ', exception);
         return false;
     }
 }

@@ -57,7 +57,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
     // add buttons
         // add the button
         scenarioDeleteButton = document.createElement("button");
-        scenarioDeleteButton.id = uniqueID + "_button";
+        scenarioDeleteButton.id = uniqueID + "_"+ type +"_delete_button";
         scenarioDeleteButton.classList.add('btn');
         scenarioDeleteButton.classList.add('btn-danger');
         scenarioDeleteButton.innerHTML = 'Delete';
@@ -67,11 +67,13 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
 
         // add the button
         scenarioLoadButton = document.createElement("button");
-        scenarioLoadButton.id = uniqueID + "_button";
+        scenarioLoadButton.id = uniqueID + "_"+ type +"_load_button";
         scenarioLoadButton.classList.add('btn');
         scenarioLoadButton.classList.add('btn-primary');
         scenarioLoadButton.innerHTML = 'Load';
         scenarioLoadButton.setAttribute('type', 'button');
+        scenarioLoadButton.keyValue = name + "|" + type;
+        scenarioLoadButton.addEventListener('click', btnScenario);
         scenarioButtonPanel.appendChild(scenarioLoadButton);
     
     newScenarioItem.appendChild(scenarioButtonPanel);

@@ -172,6 +172,10 @@ var btnScenario = function(event) {
     try{
 console.log(event.target.textContent);
         
+        // click the close button on the scenario list
+        
+        document.getElementById("close-modal").click();
+        
         removeClass(document.getElementById("scenario-name"), "inError");
         
         // get the button key 
@@ -179,6 +183,7 @@ console.log(event.target.textContent);
 
         LoadScenario(key);
     }catch(exception){
+        console.log(exception);
     }
 };
 
