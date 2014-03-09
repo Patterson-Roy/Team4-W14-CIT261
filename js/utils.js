@@ -222,7 +222,7 @@ var newScenario = function(event){
 var init = function(event){
     document.getElementById("saveButton").addEventListener('click', saveScenario);
     document.getElementById("deleteButton").addEventListener('click', delRecords);
-    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
+//    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
     document.getElementById("open-load-screen").addEventListener('click', getAllRecords);
     
     
