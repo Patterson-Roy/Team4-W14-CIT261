@@ -37,7 +37,7 @@ function validateInputs() {
     for(var i = 0; i < arr.length; i++){
         arr[i].value = arr[i].value.replace( /,/g, "" )
         arr[i].value = Number(arr[i].value);
-        if(isNaN(arr[i].value) || arr[i].value <= 0){
+        if(isNaN(arr[i].value) || arr[i].value < 0){
         alert("Please enter correct integer values.");
             return false;
         }else{
