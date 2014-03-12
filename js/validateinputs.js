@@ -34,14 +34,14 @@ function CheckValues (){
 function validateInputs() {
     var arr = [];
     arr = Array.prototype.slice.call(document.getElementsByClassName("required"));
-    for(var i = 1; i < arr.length; i++){
+    for(var i = 0; i < arr.length; i++){
         arr[i].value = arr[i].value.replace( /,/g, "" )
         arr[i].value = Number(arr[i].value);
-        if(isNaN(arr[i].value) || arr[i].value < 0){
+        if(isNaN(arr[i].value) || arr[i].value <= 0){
         alert("Please enter correct integer values.");
             return false;
         }else{
-        return true;
+        continue;
         }
     }
                 return true;
