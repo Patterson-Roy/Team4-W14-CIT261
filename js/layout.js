@@ -36,7 +36,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
     // add the items to the scenario item
     scenarioImg = document.createElement("img");
     scenarioImg.id = uniqueID + "_img";
-    scenarioImg.setAttribute('src', 'images/icons/cash.png');
+    scenarioImg.setAttribute('src', iconURL);//'images/icons/cash.png');
     newScenarioItem.appendChild(scenarioImg);
     
     // add the title
@@ -57,7 +57,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
     // add buttons
         // add the button
         scenarioDeleteButton = document.createElement("button");
-        scenarioDeleteButton.id = uniqueID + "_button";
+        scenarioDeleteButton.id = uniqueID + "_"+ type +"_delete_button";
         scenarioDeleteButton.classList.add('btn');
         scenarioDeleteButton.classList.add('btn-danger');
         scenarioDeleteButton.innerHTML = 'Delete';
@@ -67,11 +67,13 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
 
         // add the button
         scenarioLoadButton = document.createElement("button");
-        scenarioLoadButton.id = uniqueID + "_button";
+        scenarioLoadButton.id = uniqueID + "_"+ type +"_load_button";
         scenarioLoadButton.classList.add('btn');
         scenarioLoadButton.classList.add('btn-primary');
         scenarioLoadButton.innerHTML = 'Load';
         scenarioLoadButton.setAttribute('type', 'button');
+        scenarioLoadButton.keyValue = name + "|" + type;
+        scenarioLoadButton.addEventListener('click', btnScenario);
         scenarioButtonPanel.appendChild(scenarioLoadButton);
     
     newScenarioItem.appendChild(scenarioButtonPanel);
@@ -113,8 +115,11 @@ function removeScenarioByElement()
 
 
 /// Messaging system
+// this function will create a system messages at the bottome of the screen. 
+// msg:     The message that you would like to show on the message
+// type:    The type of message, 1 info, 2 warning, 3 error
 
-function createMessage ( msg )
+function createMessage ( msg, type )
 {
     /*
     <div id="msg-area">
@@ -133,22 +138,71 @@ function createMessage ( msg )
     newMessage.id = guidVal;
     newMessage.classList.add('sys-msg');
     newMessage.classList.add('rounded-corners');
-    newMessage.classList.add('transparent');
-    newMessage.innerHTML = msg;
+    
+    if (type == 1)
+    {
+        newMessage.classList.add('info');
+    } 
+    else if (type == 2)
+    {
+        newMessage.classList.add('warning');
+    } 
+    else if (type == 3)
+    {
+        newMessage.classList.add('error');
+        newMessage.classList.add('man-close');
+        closeBtn = document.createElement('div');
+        closeBtn.classList.add('closeBtn')
+        closeBtn.innerHTML = "X";
+        newMessage.appendChild( closeBtn );
+    }
+    // newMessage.classList.add('transparent');
+    // newMessage.classList.add('fade');
+    newMessage.innerHTML += msg;
     msgArea.appendChild(newMessage);
     
-    // hide the message after 5 seconds
-    setTimeout( function () { autoHideMessage(guidVal); }, 5000);
+    // fadeIn
+    setTimeout( function () { fadeIn(guidVal); }, 500);    
     
 }
 
+function fadeIn ( msgID ) {
+    msg = document.getElementById( msgID );
+    msg.classList.add( "fade" );
+    
+    if (!msg.classList.contains("man-close"))
+    {
+        // hide the message after 5 seconds
+        setTimeout( function () { autoHideMessage(msgID); }, 5000);
+    }
+    else 
+    {
+        // add the close event listener
+        msg.addEventListener('click', manCloseMsg);
+    }
+}
+                             
+function manCloseMsg ()
+{
+    autoHideMessage(this.id);
+}
+
 function autoHideMessage( msgID )
+{
+    document.getElementById( msgID ).classList.add( "remove" );    
+
+    // schedule item to be removed.
+    setTimeout( function () { removeMessage(msgID); }, 500);
+}
+
+function removeMessage ( msgID )
 {
     document.getElementById(msgID).remove();
 
     msgArea = document.getElementById('msg-area');
     msgCount = parseInt( msgArea.getAttribute('count') );
     msgArea.setAttribute( 'count', msgCount-- );
+    
 }
 
 /// utility functions
@@ -171,5 +225,20 @@ function s4() {
              .substring(1);
 };
 
+
+/// Test Nav - a collection of elements that are used for testing the methods directly.
+
+function toggleTestingTools () 
+{
+    testNav = document.getElementById("test-nav");
+    if (testNav.classList.contains("show"))
+    {
+        testNav.classList.remove("show");
+    } else {
+        testNav.classList.add("show");
+    };
+};
+
 // Event listeners
-document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
+document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("images/icons/cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
+document.getElementById("show-btn").addEventListener("click", function() { toggleTestingTools() });

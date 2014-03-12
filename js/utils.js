@@ -48,13 +48,6 @@ function ValidateEmail(mail){
     return false;
 } 
 
-function isValid(str){
-    if(/^[a-zA-Z0-9- ]*$/.test(str) === false) {
-        return false;
-    }
-    return true;
-}
-
 
 function hasClass(el, name) {
    return new RegExp('(\\s|^)'+name+'(\\s|$)').test(el.className);
@@ -113,8 +106,6 @@ var saveScenario = function (event) {
                 else{
                     // else, validate the value to email address.
                     if(ValidateEmail(sUserID)){
-
-                        sUserID = sUserID.replace( /\./g, "" ); // strip out periods as firebase doesn't like them
                         // save User ID to persistent local storage
                         localStorage.setItem('nerdherdcalc-userid', sUserID);
                         break;
@@ -131,13 +122,7 @@ var saveScenario = function (event) {
             alert("Scenario name cannot be blank.");
             return;
         }else{
-            if(!isValid(sScenarioName.value)){
-                addClass(sScenarioName, "inError");
-                alert("Valid Scenario names may contain only A to Z (upper and lower case), and 0-9.  Please re-enter the scenario name.");
-                return;
-            }else{
-                removeClass(sScenarioName, 'inError');
-            }
+            removeClass(sScenarioName, 'inError');
         }
         // attempt to add the records to firebase
 
@@ -187,6 +172,10 @@ var btnScenario = function(event) {
     try{
 console.log(event.target.textContent);
         
+        // click the close button on the scenario list
+        
+        document.getElementById("close-modal").click();
+        
         removeClass(document.getElementById("scenario-name"), "inError");
         
         // get the button key 
@@ -194,6 +183,7 @@ console.log(event.target.textContent);
 
         LoadScenario(key);
     }catch(exception){
+        console.log(exception);
     }
 };
 
@@ -230,12 +220,15 @@ var newScenario = function(event){
 
 
 var init = function(event){
-    document.getElementById("add-records").addEventListener('click', saveScenario);
-    document.getElementById("delete-records").addEventListener('click', delRecords);
-    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
+    document.getElementById("saveButton").addEventListener('click', saveScenario);
+    document.getElementById("deleteButton").addEventListener('click', delRecords);
+//    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
+    document.getElementById("open-load-screen").addEventListener('click', getAllRecords);
+    
+    
 
-    document.getElementById("new").addEventListener('click', newScenario);
-    document.getElementById("calculate").addEventListener('click', btnGo);
+    document.getElementById("newButton").addEventListener('click', newScenario);
+    document.getElementById("goButton").addEventListener('click', btnGo);
     
     document.getElementById("principal").addEventListener('change', fmtPrinc);
     document.getElementById("total").addEventListener('change', fmtTotal);

@@ -1,0 +1,16 @@
+.fade {
+    transition: opacity .25s .01s ease-in-out;
+    -moz-transition: opacity .25s .01s ease-in-out;
+    -webkit-transition: opacity .25s .01s ease-in-out;
+    opacity:.8 !important;
+}
+
+.remove {
+  opacity:0 !important;
+}
+
+#test-nav {
+    transition: left .25s .01s ease-in-out;
+    -moz-transition: left .25s .01s ease-in-out;
+    -webkit-transition: left .25s .01s ease-in-out;
+}

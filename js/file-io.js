@@ -55,7 +55,9 @@ var getAllRecords = function (event) {
             return;
 
         var out = document.getElementById("out");
+        var scenarioList = document.getElementById('scenario-list');
         out.innerHTML = ""; // clear the HTML from previous reads
+        scenarioList.innerHTML = "";
 
         var item = {};
 
@@ -69,26 +71,31 @@ var getAllRecords = function (event) {
                 if(typeof(data) !== "undefined" && data !== null){
                     // data is an Object type.  The keys is an inherited function of Object that returns an array of keys to that object.
                     // we can do a forEach on the data object this way to get the parts and pieces we need for the app.
-                    Object.keys(data).forEach(function (key, index) {
+                    Object.keys(data).forEach(function (sName, index) {
                                                 
                         item=document.createElement("div");
                         out.appendChild(item);
 
-                        Object.keys(data[key]).forEach(function (sLoanType, index1){
+                        Object.keys(data[sName]).forEach(function (sLoanType, index1){
                             item = document.createElement("button");
                             out.appendChild(item);
 
-                            var sScenarioName = window.atob(key);
+                            var sScenarioName = window.atob(sName);
 
                             item.textContent = sScenarioName + " " + sLoanType ;
                             item.setAttribute("id",sScenarioName + "-" + sLoanType);
                             item.keyValue = sScenarioName + "|" + sLoanType;
                             item.addEventListener('click',btnScenario);
+                            
+                            var icon = sLoanType === 'car'? 'images/icons/luxury3.png': sLoanType === 'home' ? 'images/icons/dwelling1.png' : sLoanType === 'other' ? 'images/icons/cash.png' : 'images/icons/cash.png';
 
-                            addScenario("", sScenarioName, sLoanType, "3,000", "__", window.btoa(sScenarioName));
+                            // -- code to add the scenario to the load window
+                            //          image, name,       loan type, loan amount, apr, uniqueID (javascript ref, no spaces)
+//                            addScenario('images/icons/cash.png', sScenarioName, sLoanType, "3,000", "__", window.btoa(sScenarioName));
+                            addScenario(icon, sScenarioName, sLoanType, NumberWithCommas(data[sName][sLoanType].principal), data[sName][sLoanType].rate, sName);
                             
                             // save data for session storage
-                            sessionStorage.setItem(sScenarioName + '|' +  sLoanType,JSON.stringify(data[key][sLoanType]));
+                            sessionStorage.setItem(sScenarioName + '|' +  sLoanType,JSON.stringify(data[sName][sLoanType]));
                         });
                     });
                 }
@@ -116,7 +123,7 @@ var delRecords = function(event){
            sLoanType === "" ||
            sLoanType === " " ||
            sLoanType === null){
-              console.log('delete failed: user ID, scenario name, or loan type is not given.  User ID: ' + sUserID + '; scenario name: ' + sScenarioName + + '; loan type: ' + sLoanType + '.');
+              console.log('delete failed: user ID, scenario name, or loan type is not given or does not exist in the data base.  User ID: ', sUserID , '; scenario name: ', sScenarioName, '; loan type: ', sLoanType, '.');
               return false;
         }
         
@@ -142,6 +149,7 @@ console.log("delete successful");
         }
         return true;
     }catch(exception){
+        console.log('delete failed: ', exception);
         return false;
     }
 }
