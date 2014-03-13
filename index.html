@@ -43,24 +43,24 @@
                 <form id="loans" name="loan-calc">
                     <fieldset>
                         <div class="col-md-6">
-                            <label class="fieldlabel" for="scenario-name" id="scenario-name-label"></label>
+                            <label class="fieldlabel" for="scenario-name" id="scenario-name-label">Scenario Name:</label>
                                 <input class="field" type="text" id="scenario-name" placeholder="Scenario Name"  size="15"><br/>
 
-                            <label class="fieldlabel" for="loan-type" id="loan-type-label"></label>
+                            <label class="fieldlabel" for="loan-type" id="loan-type-label">Loan Type:</label>
                             <select name="loan-type" id="loan-type" class="field" autofocus>
                                 <option value="car">Car</option>
                                 <option value="home">Home</option>
                                 <option value="other">Other</option>
                             </select><br/>
 
-                            <label class="fieldlabel" for="principal" id="principal-label"></label>
+                            <label class="fieldlabel" for="principal" id="principal-label">Principal:</label>
                                 <input class="field required" type="text" id="principal" placeholder="principal amount" size="15"><br/>
 
-                            <label class="fieldlabel" for="rate" id="rate-label"></label>
+                            <label class="fieldlabel" for="rate" id="rate-label">Rate:</label>
                                 <input class="field required" type="text" id="rate" placeholder="interest rate" size="8"><br/>
-                            <label class="fieldlabel" for="periods" id="periods-label"></label>
+                            <label class="fieldlabel" for="periods" id="periods-label">Periods:</label>
                                 <input class="field required" type="number" id="periods" placeholder="number of periods">
-                            <label for="period-type" id="for-label"></label>
+                            <label for="period-type" id="for-label">for</label>
                             <select name="period-id" id="period-type" class="field">
                                 <option value="mo">Month</option>
                                 <option value="qtr">Quarter</option>
@@ -70,13 +70,13 @@
                         </div>
                         <div class="col-md-6">
 
-                            <label class="fieldlabel" for="payment" id="payment-label"></label>
+                            <label class="fieldlabel" for="payment" id="payment-label">Payment:</label>
                                 <input class="field required" type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
 
-                            <label class="fieldlabel" for="total" id="total-label"></label>
+                            <label class="fieldlabel" for="total" id="total-label">Total:</label>
                                 <input class="field" type="text" id="total" size="15" disabled value="0.00"><br/>
 
-                            <label class="fieldlabel" for="interest-total" id="interest-total-label"></label>
+                            <label class="fieldlabel" for="interest-total" id="interest-total-label">Total Interest:</label>
                                 <input class="field" type="text" id="interest-total" size="15" disabled value="0.00"><br/>
                         </div>
                     </fieldset>
@@ -84,11 +84,11 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button id="goButton" class="rnd-btn"></button>
-                    <button id="newButton" class="rnd-btn"></button>
-                    <button id="saveButton" class="rnd-btn"></button>
-                    <button id="deleteButton" class="rnd-btn"></button>
-                    <button id="open-load-screen" data-toggle="modal" data-target="#load-screen" type="button" class="rnd-btn"></button>
+                    <button id="goButton" class="rnd-btn">Go</button>
+                    <button id="newButton" class="rnd-btn">New</button>
+                    <button id="saveButton" class="rnd-btn">Save</button>
+                    <button id="deleteButton" class="rnd-btn">Delete</button>
+                    <button id="open-load-screen" data-toggle="modal" data-target="#load-screen" type="button" class="rnd-btn">Scenario List</button>
                 </div>
             </div>
         </section>

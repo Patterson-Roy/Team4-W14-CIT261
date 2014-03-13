@@ -73,19 +73,19 @@ var getAllRecords = function (event) {
                     // we can do a forEach on the data object this way to get the parts and pieces we need for the app.
                     Object.keys(data).forEach(function (sName, index) {
                                                 
-                        item=document.createElement("div");
-                        out.appendChild(item);
+//                        item=document.createElement("div");
+//                        out.appendChild(item);
 
                         Object.keys(data[sName]).forEach(function (sLoanType, index1){
-                            item = document.createElement("button");
-                            out.appendChild(item);
+//                            item = document.createElement("button");
+//                            out.appendChild(item);
 
                             var sScenarioName = window.atob(sName);
 
-                            item.textContent = sScenarioName + " " + sLoanType ;
-                            item.setAttribute("id",sScenarioName + "-" + sLoanType);
-                            item.keyValue = sScenarioName + "|" + sLoanType;
-                            item.addEventListener('click',btnScenario);
+//                            item.textContent = sScenarioName + " " + sLoanType ;
+//                            item.setAttribute("id",sScenarioName + "-" + sLoanType);
+//                            item.keyValue = sScenarioName + "|" + sLoanType;
+//                            item.addEventListener('click',btnScenario);
                             
                             var icon = sLoanType === 'car'? 'images/icons/luxury3.png': sLoanType === 'home' ? 'images/icons/dwelling1.png' : sLoanType === 'other' ? 'images/icons/cash.png' : 'images/icons/cash.png';
 
