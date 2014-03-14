@@ -33,13 +33,6 @@ function NumberWithCommas(x) {
 }
 
 function ValidateEmail(mail){
-/*
-    if(typeof (mail) !== undefined && mail !== "" && mail !== null){
-        return true;
-    }else{
-        return false;
-    }
-*/
     
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))  
     {  
@@ -56,24 +49,17 @@ function hasClass(el, name) {
 function addClass(el, name){
     // remove all instances of the class first
     removeClass(el,name);
-//    while(el.classList.contains(name)){
-//       el.classList.remove(name);
-//    }
+
     // now add the class
     el.classList.add(name);
-
-//   if (!hasClass(el, name)) { el.className += (el.className ? ' ' : '') +name; }
 }
 
 function removeClass(el, name)
 {
-    // remove all instances of the class first
+    // remove all instances of the class 
     while(el.classList.contains(name)){
        el.classList.remove(name);
     }
-//   if (hasClass(el, name)) {
-//      el.className=el.className.replace(new RegExp('(\\s|^)'+name+'(\\s|$)'),' ').replace(/^\s+|\s+$/g, '');
-//   }
 }
 
 function GetUserID (){
@@ -89,7 +75,6 @@ var saveScenario = function (event) {
         var sUserID = GetUserID();
 
         event.preventDefault();
-        var item = {};
 
         // if no previous user id, then prompt for it and store it as applicable.
         if(typeof(sUserID) === undefined || sUserID === null || 
@@ -130,18 +115,6 @@ var saveScenario = function (event) {
             return; // add failed, so just return here.
         }
 
-        var sType = document.getElementById("loan-type");
-
-        // build out the scenario button
-        var btnButton = document.getElementById(sScenarioName.value + "-" + sType.value);
-        if(!btnButton){
-            item = document.createElement("button");
-            out.appendChild(item);
-            item.textContent = sScenarioName.value + " " +  sType.value;  // put the scenario key as the button name
-            item.setAttribute("id",sScenarioName.value + "-" + sType.value);
-            item.keyValue = sScenarioName.value + "|" + sType.value;
-            item.addEventListener('click',btnScenario);// event handler
-        }
     }catch( exception ){
     }
     return;
@@ -151,6 +124,7 @@ function LoadScenario(key){
     try{
         var data = JSON.parse(window.sessionStorage.getItem(key));
         
+        // get the key from the button key (parameter passed in)
         var arrMyArr = key.split("|");
 
         document.getElementById("scenario-name").value = arrMyArr[0]; // scenario name
@@ -163,14 +137,12 @@ function LoadScenario(key){
         document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
         document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
     
-//    addClass(document.getElementById("out"), "hide-me");
     }catch(exception){
     }
 }
 
 var btnScenario = function(event) {
     try{
-console.log(event.target.textContent);
         
         // click the close button on the scenario list
         
@@ -222,7 +194,6 @@ var newScenario = function(event){
 var init = function(event){
     document.getElementById("saveButton").addEventListener('click', saveScenario);
     document.getElementById("deleteButton").addEventListener('click', delRecords);
-//    document.getElementById("get-all-records").addEventListener('click', getAllRecords);
     document.getElementById("open-load-screen").addEventListener('click', getAllRecords);
     
     

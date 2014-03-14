@@ -48,6 +48,7 @@ function addScenario( iconURL, name, type, value, apr, uniqueID )
     
     // add the details.
     newScenarioItem.innerHTML += type + ' / ' + value + ' / ' + apr;
+    newScenarioItem.keyValue = name + '|' + type;
     
     // add button panel
     scenarioButtonPanel = document.createElement("div");
@@ -94,6 +95,13 @@ function removeScenarioByID( uniqueID )
         alert("The Selected Scenario cannot be found on the page" );
         return;
     }
+    
+    var key = selElement.keyValue;
+    var arr = [];
+    arr = key.split("|");
+    
+    DeleteFirebaseRecs(arr[0],arr[1]);
+    
     
     selElement.remove();
 

@@ -26,6 +26,7 @@ function addRecords () {
         var fTotal = document.getElementById("total").value;
         var fTotalInterest = document.getElementById("interest-total").value;
 
+        // load the data for the JSON stringify function
         data.principal = fPrincipal.replace( /,/g, "" ); // strip any commas;
         data.rate = fRate.replace( /,/g, "" ); // strip any commas;
         data.periodtype = sPdType;
@@ -34,6 +35,7 @@ function addRecords () {
         data.total = fTotal.replace(/,/g,""); // strip any commas
         data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
 
+        // prep the Ajax call to firebase
         xhtmlreq.open("PUT","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + "/" + window.btoa(sScenarioName) + "/" + sLoanType + ".json",true);
         xhtmlreq.setRequestHeader("Content-Type", "application/json");
         xhtmlreq.send(JSON.stringify(data));
@@ -53,13 +55,14 @@ var getAllRecords = function (event) {
 
         if(sUserID === null || sUserID === "")
             return;
+        
+        // completely clear out the session storage
+        sessionStorage.clear();
 
-        var out = document.getElementById("out");
         var scenarioList = document.getElementById('scenario-list');
-        out.innerHTML = ""; // clear the HTML from previous reads
-        scenarioList.innerHTML = "";
 
-        var item = {};
+        // clear out the scenario list modal window from previous runs.
+        scenarioList.innerHTML = "";
 
         var xhtmlreq= new XMLHttpRequest();
         xhtmlreq.open("GET","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + ".json");
@@ -73,25 +76,12 @@ var getAllRecords = function (event) {
                     // we can do a forEach on the data object this way to get the parts and pieces we need for the app.
                     Object.keys(data).forEach(function (sName, index) {
                                                 
-//                        item=document.createElement("div");
-//                        out.appendChild(item);
-
                         Object.keys(data[sName]).forEach(function (sLoanType, index1){
-//                            item = document.createElement("button");
-//                            out.appendChild(item);
-
                             var sScenarioName = window.atob(sName);
-
-//                            item.textContent = sScenarioName + " " + sLoanType ;
-//                            item.setAttribute("id",sScenarioName + "-" + sLoanType);
-//                            item.keyValue = sScenarioName + "|" + sLoanType;
-//                            item.addEventListener('click',btnScenario);
-                            
                             var icon = sLoanType === 'car'? 'images/icons/luxury3.png': sLoanType === 'home' ? 'images/icons/dwelling1.png' : sLoanType === 'other' ? 'images/icons/cash.png' : 'images/icons/cash.png';
 
                             // -- code to add the scenario to the load window
                             //          image, name,       loan type, loan amount, apr, uniqueID (javascript ref, no spaces)
-//                            addScenario('images/icons/cash.png', sScenarioName, sLoanType, "3,000", "__", window.btoa(sScenarioName));
                             addScenario(icon, sScenarioName, sLoanType, NumberWithCommas(data[sName][sLoanType].principal), data[sName][sLoanType].rate, sName);
                             
                             // save data for session storage
@@ -106,13 +96,21 @@ var getAllRecords = function (event) {
 }
 
 var delRecords = function(event){
+    event.preventDefault();
+    // extract the scenario name and loan type from the form
+    var sScenarioName = document.getElementById("scenario-name").value;
+    var sLoanType = document.getElementById("loan-type").value;
+
+    // delete the records from firebase
+    DeleteFirebaseRecs(sScenarioName, sLoanType);
+    
+}
+function DeleteFirebaseRecs(sScenarioName, sLoanType){
     try{
         var sUserID = GetUserID();
         event.preventDefault();
 
         
-        var sScenarioName = document.getElementById("scenario-name").value;
-        var sLoanType = document.getElementById("loan-type").value;
         if(sUserID === null || 
            sUserID === "" || 
            typeof(sScenarioName) === undefined || 
@@ -137,13 +135,11 @@ var delRecords = function(event){
         // remove the record from the database and from local session storage.
 
         var xhtmlreq = new XMLHttpRequest();
-        var output = document.getElementById("out");
         xhtmlreq.open("DELETE","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + "/"+ window.btoa(sScenarioName) + "/" + sLoanType + ".json");
         xhtmlreq.send(null);
         xhtmlreq.onreadystatechange = function(){
             if(xhtmlreq.readyState == 4 && xhtmlreq.status == 200){
-console.log("delete successful");
-                output.removeChild(document.getElementById(sScenarioName + "-" + sLoanType));
+                console.log("delete successful");
                 sessionStorage.removeItem(sScenarioName + "|" + sLoanType);
             }
         }
