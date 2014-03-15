@@ -136,10 +136,16 @@ function calcPeriodsPerYear(){
         switch(strPPY){
             case "Month":
                 return 12;
+                break;
             case "Quarter":
                 return 4;
+                break;
             case "Year":
                 return 1;
+                break;
+            default:
+                return 12;
+                break;
     }
 }
 

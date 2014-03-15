@@ -53,7 +53,7 @@ label.fieldlabel{
 }
 
 .hide-me{
-    visibility: hidden;
+    display: none;
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape){
@@ -63,3 +63,39 @@ label.fieldlabel{
 @media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait){
 }
 
+#amortization-container{
+    position: absolute;
+    top: 0;
+    background-color: white;
+    height: 100%;
+    width: 100%;
+    padding: 5px;
+    margin: auto;
+    clear: left;
+}
+
+table{
+    margin-top: 10px;
+    margin-left: .2em;
+}
+
+table, th, td, thead, tbody
+{
+    border:1px solid black;
+}
+
+thead{
+    background-color: aliceblue;
+}
+
+thead tr td{
+    text-align: center;
+}
+
+td{
+    width: 7em;
+}
+
+.data-row{
+    text-align: right;
+}

@@ -112,8 +112,10 @@ var saveScenario = function (event) {
         // attempt to add the records to firebase
 
         if(!addRecords()){
-            return; // add failed, so just return here.
+            return false; // add failed, so just return here.
         }
+        
+        removeClass(document.getElementById("amortButton"), "hide-me");
 
     }catch( exception ){
     }
@@ -136,6 +138,9 @@ function LoadScenario(key){
         document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
         document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
         document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
+        
+        removeClass(document.getElementById("amortButton"), "hide-me");
+
     
     }catch(exception){
     }
@@ -181,25 +186,52 @@ var newScenario = function(event){
     document.getElementById("total").value = "";
     document.getElementById("interest-total").value = "";
     
+    addClass(document.getElementById("amortButton"), "hide-me");
+
 };
  var btnGo = function(event){
      event.preventDefault();
     if(CheckValues() && validateInputs()){
         Calculate();
+        removeClass(document.getElementById("amortButton"), "hide-me");
     }
      
  };
 
+var btnAmortize = function (event){
+    var nPrincipal = document.getElementById('principal').value;
+    nPrincipal = nPrincipal.replace( /,/g, "" );
+    nPrincipal = parseFloat(nPrincipal);
+    var nPayment = document.getElementById('payment').value;
+    nPayment = nPayment.replace( /,/g, "" );
+    nPayment = parseFloat(nPayment);
+    var nRate = document.getElementById('rate').value;
+    nRate = nRate.replace( /,/g, "" );
+    nRate = parseFloat(nRate);
+    var period = calcPeriodsPerYear();
+    var nPdRate = (nRate * .01)/period;
+
+    AmortizeLoan(nPrincipal, nPayment, nRate, nPdRate);
+    
+    document.getElementById("loan-amt").textContent=document.getElementById('principal').value;
+};
+
+var btnAmortCancel = function (event){
+    event.preventDefault();
+    addClass(document.getElementById('amortization-container'),'hide-me');
+    document.getElementById('amortize-table').innerHTML = "";
+};
 
 var init = function(event){
     document.getElementById("saveButton").addEventListener('click', saveScenario);
     document.getElementById("deleteButton").addEventListener('click', delRecords);
     document.getElementById("open-load-screen").addEventListener('click', getAllRecords);
-    
-    
 
     document.getElementById("newButton").addEventListener('click', newScenario);
     document.getElementById("goButton").addEventListener('click', btnGo);
+
+    document.getElementById("amortButton").addEventListener('click', btnAmortize);
+    document.getElementById("amort-cancel").addEventListener('click', btnAmortCancel);
     
     document.getElementById("principal").addEventListener('change', fmtPrinc);
     document.getElementById("total").addEventListener('change', fmtTotal);
