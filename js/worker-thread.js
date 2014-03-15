@@ -27,10 +27,12 @@ testNav.appendChild(testControl);
 // create a worker thread
 var worker = new Worker('js/doWork.js');
 
+// this is the catch all when the worker returns the message
 worker.addEventListener('message', function(e) {
   createMessage('Worker said: ' + e.data, 1);
 }, false);
 
+// click event listener for the test buttons.
 function workerMessage () {
     worker.postMessage('Hello World'); // Send data to our worker.
 }
