@@ -72,6 +72,7 @@ function GetUserID (){
 
 var saveScenario = function (event) {
     try{
+        if(validateInputs() && CheckValues()){
         var sUserID = GetUserID();
 
         event.preventDefault();
@@ -116,7 +117,7 @@ var saveScenario = function (event) {
         }
         
         removeClass(document.getElementById("amortButton"), "hide-me");
-
+        }
     }catch( exception ){
     }
     return;
