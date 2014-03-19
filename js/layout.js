@@ -176,7 +176,7 @@ function createMessage ( msg, type )
 
 function fadeIn ( msgID ) {
     msg = document.getElementById( msgID );
-    msg.classList.add( "fade" );
+    msg.classList.add( "fade-add" );
     
     if (!msg.classList.contains("man-close"))
     {
