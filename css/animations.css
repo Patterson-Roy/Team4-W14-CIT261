@@ -14,3 +14,39 @@
     -moz-transition: left .25s .01s ease-in-out;
     -webkit-transition: left .25s .01s ease-in-out;
 }
+
+.input-group .error {
+    transition: all .25s .01s ease-in-out;
+    -moz-transition: all .25s .01s ease-in-out;
+    -webkit-transition: all .25s .01s ease-in-out;
+}
+
+.input-group.error .error {
+    opacity: 1 !important;
+    height: 30px;
+    padding: 5px;
+    
+}
+
+.input-group label {
+    transition: all .25s .01s ease-in-out;
+    -moz-transition: all .25s .01s ease-in-out;
+    -webkit-transition: all .25s .01s ease-in-out;
+}
+
+.input-group.error label {
+    color: #000;
+}
+
+.input-group {
+    transition: all .25s .01s ease-in-out;
+    -moz-transition: all .25s .01s ease-in-out;
+    -webkit-transition: all .25s .01s ease-in-out;
+}
+
+.input-group.error {
+    background: #ffbdbd;
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+}

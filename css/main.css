@@ -1,15 +1,3 @@
-label.fieldlabel{
-    text-align: right;
-    display: block;
-    width: 8em !important;
-    line-height: 1.2em;
-    float: left;
-    clear: left;
-    margin: 0 3px .5em 0 !important;
-    color: black;
-    overflow: auto;
-}
-
 .field{
     line-height: 1.2em;
     color: black;

@@ -17,9 +17,9 @@
         ================================================== -->
         <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" media="screen" />
         <link href="css/main.css" type="text/css" rel="stylesheet" media="screen" />
-        <link href="css/layout.css" type="text/css" rel="stylesheet" media="screen" />
         <link href="css/animations.css" type="text/css" rel="stylesheet" media="screen" />
         <link href="css/print-calculator.css" type="text/css" rel="stylesheet" media="print" />
+        <link href="css/layout.css" type="text/css" rel="stylesheet" media="screen" />
 
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -44,41 +44,68 @@
                 <form id="loans" name="loan-calc">
                     <fieldset>
                         <div class="col-md-6">
-                            <label class="fieldlabel" for="scenario-name" id="scenario-name-label">Scenario Name:</label>
-                                <input class="field" type="text" id="scenario-name" placeholder="Scenario Name"  size="15"><br/>
+                            <div class="input-group">
+                                <label class="fieldlabel" for="scenario-name" id="scenario-name-label">Scenario Name</label>
+                                <input class="field" type="text" id="scenario-name" placeholder="Scenario Name"  size="15">
+                                <div class="error">This is my error</div>
+                            </div>
 
-                            <label class="fieldlabel" for="loan-type" id="loan-type-label">Loan Type:</label>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="loan-type" id="loan-type-label">Loan Type</label>
                             <select name="loan-type" id="loan-type" class="field" autofocus>
                                 <option value="car">Car</option>
                                 <option value="home">Home</option>
                                 <option value="other">Other</option>
-                            </select><br/>
+                            </select>
+                                <div class="error">This is my error</div>
+                            </div>
 
-                            <label class="fieldlabel" for="principal" id="principal-label">Principal:</label>
-                                <input class="field required" type="text" id="principal" placeholder="principal amount" size="15"><br/>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="principal" id="principal-label">Principal</label>
+                                <input class="field required" type="text" id="principal" placeholder="principal amount" size="15">
+                                <div class="error">This is my error</div>
+                            </div>
 
-                            <label class="fieldlabel" for="rate" id="rate-label">Rate:</label>
-                                <input class="field required" type="text" id="rate" placeholder="interest rate" size="8"><br/>
-                            <label class="fieldlabel" for="periods" id="periods-label">Periods:</label>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="rate" id="rate-label">Rate</label>
+                                <input class="field required" type="text" id="rate" placeholder="interest rate" size="8">
+                                <div class="error">This is my error</div>
+                            </div>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="periods" id="periods-label">Periods</label>
                                 <input class="field required" type="number" id="periods" placeholder="number of periods">
-                            <label for="period-type" id="for-label">for</label>
+                                <div class="error">This is my error</div>
+                            </div>
+                            <div class="input-group">
+                            <label for="period-type" id="for-label" class="fieldlabel">for</label>
                             <select name="period-id" id="period-type" class="field">
                                 <option value="mo">Month</option>
                                 <option value="qtr">Quarter</option>
                                 <option value="yr">Year</option>
-                            </select><br/>
+                            </select>
+                                <div class="error">This is my error</div>
+                            </div>
 
                         </div>
                         <div class="col-md-6">
 
-                            <label class="fieldlabel" for="payment" id="payment-label">Payment:</label>
-                                <input class="field required" type="text" id="payment" placeholder="Payment Amount" size="15"><br/>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="payment" id="payment-label">Payment</label>
+                                <input class="field required" type="text" id="payment" placeholder="Payment Amount" size="15">
+                                <div class="error">This is my error</div>
+                            </div>
 
-                            <label class="fieldlabel" for="total" id="total-label">Total:</label>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="total" id="total-label">Total</label>
                                 <input class="field" type="text" id="total" size="15" disabled value="0.00"><br/>
+                                <div class="error">This is my error</div>
+                            </div>
 
-                            <label class="fieldlabel" for="interest-total" id="interest-total-label">Total Interest:</label>
-                                <input class="field" type="text" id="interest-total" size="15" disabled value="0.00"><br/>
+                            <div class="input-group">
+                            <label class="fieldlabel" for="interest-total" id="interest-total-label">Total Interest</label>
+                                <input class="field" type="text" id="interest-total" size="15" disabled value="0.00">
+                                <div class="error">This is my error</div>
+                            </div>
                         </div>
                     </fieldset>
                 </form>
@@ -150,6 +177,7 @@
 
         <div id="test-nav">
             <div id="show-btn">Testing Tools</div>
+                <h4>Testing Tools</h4>
                 <div class="attribute-group">
                     <h4>Message Testing</h4>
                     <button type="button" onclick='createMessage(guid(), 1)'>Info Test Messages</button>
@@ -159,6 +187,18 @@
                 <div class="attribute-group">
                     <h4>Scenario Testing</h4>
                     <button id="open-load-screen" data-toggle="modal" data-target="#load-screen" type="button">Load Scenario</button>
+                </div>
+                <div class="attribute-group">
+                    <h4>Error Message Testing</h4>
+                    <button type="button" onclick="showHideError('scenario-name', document.getElementById('msg-tst-value').value);">Show/Hide Scenario Error</button>
+                    <button type="button" onclick="showHideError('loan-type', document.getElementById('msg-tst-value').value);">Show/Hide Loan type Error</button>
+                    <button type="button" onclick="showHideError('principal', document.getElementById('msg-tst-value').value);">Show/Hide principal Error</button>
+                    <button type="button" onclick="showHideError('rate', document.getElementById('msg-tst-value').value);">Show/Hide rate Error</button>
+                    <button type="button" onclick="showHideError('periods', document.getElementById('msg-tst-value').value);">Show/Hide Periods Error</button>
+                    <button type="button" onclick="showHideError('payment', document.getElementById('msg-tst-value').value);">Show/Hide payment Error</button>
+                    <button type="button" onclick="showHideError('total', document.getElementById('msg-tst-value').value);">Show/Hide total Error</button>
+                    <button type="button" onclick="showHideError('interest-total', document.getElementById('msg-tst-value').value);">Show/Hide total interest Error</button>
+                    <textarea id="msg-tst-value">Here is my special message</textarea>
                 </div>
         </div>
 

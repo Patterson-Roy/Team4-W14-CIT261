@@ -106,11 +106,11 @@ body {
 
 #show-btn {
     position: absolute;
-    right: -70px;
+    right: -65px;
     /* right: 10px; */
     background-color: #000;
     color: white;
-    height: 35px;
+    height: 30px;
     padding: 5px;
     bottom: 50px;
     
@@ -138,16 +138,113 @@ body {
 #test-nav {
     position: fixed;
     top: 0;
-    left: -49%;
-    width: 50%;
-    background-color: #e6e6e6;
+    left: -295px;
+    width: 300px;
+    background-color: #000;
     height: 100%;
     padding: 10px;
     border-right: 5px solid #000;
 }
 
+#test-nav .attribute-group {
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+#test-nav .attribute-group textarea {
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+}
+
+#test-nav button {
+    width: 100%;
+    padding: 5px
+}
+
+#test-nav h4 {
+    margin-top: 0px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
+
+#test-nav .attribute-group h4 {
+    margin-top: 0px;
+    color: #236abc;
+    font-weight: bold;
+    text-align: center;    
+}
+
 #test-nav.show {
     left: 0;
+}
+
+/* Main Screen */
+
+.input-group {
+    width: 100%;
+}
+
+#loans input, #loans select {
+    width: 100%;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#loans input:focus, #loans select:focus {
+    background: #fffdc0;    
+}
+
+#loans input.error, #loans select.error {
+    background: #fda9a5;   
+    color: #000 !important;
+}
+
+label.fieldlabel{
+    color: #35c7f7;
+/*
+    text-align: right;
+    display: block;
+    width: 8em !important;
+    line-height: 1.2em;
+    float: left;
+    clear: left;
+    margin: 0 3px .5em 0 !important;
+    color: black;
+    overflow: auto;
+    */
+}
+
+.input-group .error {
+    background: red;
+    border-radius: 15px;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    height: 0px;
+}
+
+.input-group.error {
+    /* this is the container for the input and the error */
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: landscape){
+    label.fieldlabel{
+        text-align: left;
+    }    
+    
+}
+
+/*  tablet portrait mode  for handheld devices*/
+@media only screen and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait){
+    label.fieldlabel{
+        text-align: center;
+        width: 100%;
+        /* margin-top: 10px; */
+    }    
 }
 
 /* shared styles */

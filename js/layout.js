@@ -213,6 +213,33 @@ function removeMessage ( msgID )
     
 }
 
+function showHideError (elemID, errorMsg) {
+    var parElem = document.getElementById(elemID).parentNode;
+    if (parElem.classList.contains('error'))
+    {
+        parElem.classList.remove('error');
+    } else {
+        // set the message
+        var children = parElem.childNodes;
+        
+        // alert (children.length);
+        
+        for(var i=0; i < children.length; i++)
+        {
+            if (children[i].nodeType != 3)
+            {
+                if (children[i].classList.contains('error'))
+                {
+                    children[i].innerHTML = errorMsg;
+                }                
+            }
+        }
+        
+        parElem.classList.add('error');
+    }
+    
+}
+
 /// utility functions
 
 /*
