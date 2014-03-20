@@ -240,6 +240,10 @@ function showHideError (elemID, errorMsg) {
     
 }
 
+function hideAllErrors () {
+    
+}
+
 /// utility functions
 
 /*
