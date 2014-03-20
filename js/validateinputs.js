@@ -38,7 +38,8 @@ function validateInputs() {
         arr[i].value = arr[i].value.replace( /,/g, "" )
         arr[i].value = Number(arr[i].value);
         if(isNaN(arr[i].value) || arr[i].value < 0){
-        alert("Please enter correct integer values.");
+           var message = "Please enter correct integer values.";
+        showHideError(arr[i].id, message);    
             return false;
         }else{
         continue;
