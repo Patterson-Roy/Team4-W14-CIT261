@@ -214,28 +214,32 @@ function removeMessage ( msgID )
 }
 
 function showHideError (elemID, errorMsg) {
-    var parElem = document.getElementById(elemID).parentNode;
-    if (parElem.classList.contains('error'))
-    {
-        parElem.classList.remove('error');
-    } else {
-        // set the message
-        var children = parElem.childNodes;
-        
-        // alert (children.length);
-        
-        for(var i=0; i < children.length; i++)
+    try{
+        var parElem = document.getElementById(elemID).parentNode;
+        if (parElem.classList.contains('error'))
         {
-            if (children[i].nodeType != 3)
+            parElem.classList.remove('error');
+        } else {
+            // set the message
+            var children = parElem.childNodes;
+
+            // alert (children.length);
+
+            for(var i=0; i < children.length; i++)
             {
-                if (children[i].classList.contains('error'))
+                if (children[i].nodeType != 3)
                 {
-                    children[i].innerHTML = errorMsg;
-                }                
+                    if (children[i].classList.contains('error'))
+                    {
+                        children[i].innerHTML = errorMsg;
+                    }                
+                }
             }
+
+            parElem.classList.add('error');
         }
-        
-        parElem.classList.add('error');
+    }catch(e){
+        console.log(e.message);
     }
     
 }

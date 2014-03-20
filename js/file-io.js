@@ -95,16 +95,6 @@ var getAllRecords = function (event) {
     }
 }
 
-var delRecords = function(event){
-    event.preventDefault();
-    // extract the scenario name and loan type from the form
-    var sScenarioName = document.getElementById("scenario-name").value;
-    var sLoanType = document.getElementById("loan-type").value;
-
-    // delete the records from firebase
-    DeleteFirebaseRecs(sScenarioName, sLoanType);
-    
-}
 function DeleteFirebaseRecs(sScenarioName, sLoanType){
     try{
         var sUserID = GetUserID();

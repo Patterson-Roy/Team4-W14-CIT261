@@ -1,19 +1,26 @@
 
-var fmtPrinc = function (event) {
+var fmtPrinc = function () {
     var principal = document.getElementById("principal").value;
     if (typeof(principal) !== "undefined" && principal !== null && principal !== "" && !isNaN(principal)) {
         document.getElementById("principal").value = NumberWithCommas(parseFloat(principal).toFixed(2));
     }
 };
 
-var fmtTotal = function (event) {
+var fmtPayment = function () {
+    var payment = document.getElementById("payment").value;
+    if (typeof(payment) !== "undefined" && payment !== null && payment !== "" && !isNaN(payment)) {
+        document.getElementById("payment").value = NumberWithCommas(parseFloat(payment).toFixed(2));
+    }
+};
+
+var fmtTotal = function () {
     var total = document.getElementById("total").value;
     if (typeof(total) !== "undefined" && total !== null && total !== "" && !isNaN(total)) {
         document.getElementById("total").value = NumberWithCommas(parseFloat(total).toFixed(2));
     }
 };
 
-var fmtTotInt = function (event) {
+var fmtTotInt = function () {
     var totalInt = document.getElementById("interest-total").value;
     if (typeof(totalInt) !== "undefined" && totalInt !== null && totalInt !== "" && !isNaN(totalInt)) {
         document.getElementById("interest-total").value = NumberWithCommas(parseFloat(totalInt).toFixed(2));
@@ -72,51 +79,62 @@ function GetUserID (){
 
 var saveScenario = function (event) {
     try{
-        if(validateInputs() && CheckValues()){
-        var sUserID = GetUserID();
-
         event.preventDefault();
+        // remomve all errors before trying to save.  Save will trigger errors as needed.
+        
+        hideAllErrors();
+        
+        // perform validations on save
+        
+        if(validateInputs() && CheckValues(true)){
 
-        // if no previous user id, then prompt for it and store it as applicable.
-        if(typeof(sUserID) === undefined || sUserID === null || 
-            typeof(sUserID.value) === undefined || sUserID.value === null || sUserID.value === ""){
+            var sScenarioName = document.getElementById("scenario-name");
 
-            // loop until either cancel or a valid value is keyed in.
-            while(!ValidateEmail(sUserID)){
-                sUserID = prompt("Enter valid email address","");
+            var sUserID = GetUserID();
 
-                // if cancel button on prompt was clicked, null is returned.
-                if(sUserID === null){
-                    return;
-                }
-                else{
-                    // else, validate the value to email address.
-                    if(ValidateEmail(sUserID)){
-                        // save User ID to persistent local storage
-                        localStorage.setItem('nerdherdcalc-userid', sUserID);
-                        break;
+            // if no previous user id, then prompt for it and store it as applicable.
+            if(typeof(sUserID) === "undefined" || sUserID === null || 
+                typeof(sUserID.value) === "undefined" || sUserID.value === null || sUserID.value === ""){
 
+                // loop until either cancel or a valid value is keyed in.
+                while(!ValidateEmail(sUserID)){
+                    sUserID = prompt("Enter valid email address","");
+
+                    // if cancel button on prompt was clicked, null is returned.
+                    if(sUserID === null){
+                        return;
+                    }
+                    else{
+                        // else, validate the value to email address.
+                        if(ValidateEmail(sUserID)){
+                            // save User ID to persistent local storage
+                            localStorage.setItem('nerdherdcalc-userid', sUserID);
+                            break;
+
+                        }
                     }
                 }
             }
-        }
 
-        var sScenarioName = document.getElementById("scenario-name");
+            if(typeof(sScenarioName.value) === "undefined" || 
+               sScenarioName.value === null || 
+               sScenarioName.value === "" || sScenarioName === " "){
+//                addClass(sScenarioName, "inError");
+                showHideError(sScenarioName.id,"Scenario name cannot be blank.");
+                return;
+//            }else{
+//                removeClass(sScenarioName, 'inError');
+            }
+            // attempt to add the records to firebase
 
-        if(typeof(sScenarioName.value) === undefined || sScenarioName.value === null || sScenarioName.value === "" || sScenarioName === " "){
-            addClass(sScenarioName, "inError");
-            alert("Scenario name cannot be blank.");
-            return;
-        }else{
-            removeClass(sScenarioName, 'inError');
-        }
-        // attempt to add the records to firebase
+            if(!addRecords()){
+                return false; // add failed, so just return here.
+            }
 
-        if(!addRecords()){
-            return false; // add failed, so just return here.
-        }
-        
-        removeClass(document.getElementById("amortButton"), "hide-me");
+            // send informational message to user that scenario was saved.
+            createMessage(sScenarioName.value + " was saved.", 1)
+
+            removeClass(document.getElementById("amortButton"), "hide-me");
         }
     }catch( exception ){
     }
@@ -146,6 +164,23 @@ function LoadScenario(key){
     }catch(exception){
     }
 }
+
+
+var delRecords = function(event){
+    event.preventDefault();
+    // extract the scenario name and loan type from the form
+    var sScenarioName = document.getElementById("scenario-name").value;
+    var sLoanType = document.getElementById("loan-type").value;
+
+    // delete the records from firebase
+    if(DeleteFirebaseRecs(sScenarioName, sLoanType)){
+        // send informational message to user that scenario was deleted.
+        createMessage(sScenarioName + " was deleted.", 1)
+    }
+
+    
+};
+
 
 var btnScenario = function(event) {
     try{
