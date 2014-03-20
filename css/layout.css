@@ -87,12 +87,12 @@ body {
 }
 
 #msg-area .sys-msg.info {
-    background-color: lightblue;
-    color: #000;
+    background-color: #000;
+    color: #FFF;
 }
 
 #msg-area .sys-msg.warning {
-    background-color: yellow;
+    background-color: orange;
     color: #000;
 }
 
