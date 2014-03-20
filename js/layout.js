@@ -241,6 +241,18 @@ function showHideError (elemID, errorMsg) {
 }
 
 function hideAllErrors () {
+    // set the message
+    var inputGroup = document.getElementsByClassName('input-group');
+
+    // alert (children.length);
+
+    for(var i=0; i < inputGroup.length; i++)
+    {
+        if (inputGroup[i].classList.contains('error'))
+        {
+            inputGroup[i].classList.remove('error');
+        }
+    }
     
 }
 
