@@ -17,11 +17,13 @@ function CheckValues (){
     
     
     if(count >1){
-        alert("only one entry can be blank");
+        var message = "only one entry can be blank";
+        createMessage(message, 3);
         return false;
     }
     else if(count == 0){
-        alert("at least one enty has to be blank");
+        var message = "atleast one entry must be blank";
+        createMessage(message, 3);
         return false;
     }
     
@@ -38,9 +40,9 @@ function validateInputs() {
         arr[i].value = arr[i].value.replace( /,/g, "" )
         arr[i].value = Number(arr[i].value);
         if(isNaN(arr[i].value) || arr[i].value < 0){
-           var message = "Please enter correct integer values.";
-        showHideError(arr[i].id, message);    
-            return false;
+            var message = "Please enter correct integer values.";
+            showHideError(arr[i].id, message);    
+                return false;
         }else{
         continue;
         }

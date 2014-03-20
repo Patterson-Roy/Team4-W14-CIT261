@@ -192,6 +192,7 @@ var newScenario = function(event){
 };
  var btnGo = function(event){
      event.preventDefault();
+     hideAllErrors();
     if(CheckValues() && validateInputs()){
         Calculate();
         removeClass(document.getElementById("amortButton"), "hide-me");
