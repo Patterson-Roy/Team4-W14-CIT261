@@ -259,6 +259,32 @@ var btnAmortCancel = function (event){
     document.getElementById('amortize-table').innerHTML = "";
 };
 
+function numberPad(item){
+    if(item.id === 'term'){
+        item.value = parseInt(item.value.replace( /,/g, "" ));
+    }else{
+        item.value = parseFloat(item.value.replace( /,/g, "" ));
+    }
+    
+    item.setAttribute("type", "number");
+}
+
+function makeText(item){
+    item.setAttribute("type", "text");
+    if (item.value === "" ||  item.value === " "){
+        item.value = "";
+        return;
+    }
+    if(item.id === 'rate')
+        item.value = NumberWithCommas(parseFloat(item.value).toFixed(3));
+    else if (item.id !== 'term')
+        item.value = NumberWithCommas(parseFloat(item.value).toFixed(2));
+    else
+        item.value = parseInt(item.value);
+}
+
+
+
 var init = function(event){
     document.getElementById("saveButton").addEventListener('click', saveScenario);
     document.getElementById("deleteButton").addEventListener('click', delRecords);
@@ -273,6 +299,13 @@ var init = function(event){
     document.getElementById("principal").addEventListener('change', fmtPrinc);
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
+    
+    var arr = Array.prototype.slice.call(document.getElementsByClassName("number"));
+
+    arr.forEach(function (item) {
+        item.setAttribute('onfocus', "numberPad(this)");
+        item.setAttribute('onblur', "makeText(this)");
+    });
 }
 
 document.addEventListener("DOMContentLoaded",init);
