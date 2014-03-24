@@ -1,33 +1,3 @@
-
-var fmtPrinc = function () {
-    var principal = document.getElementById("principal").value;
-    if (typeof(principal) !== "undefined" && principal !== null && principal !== "" && !isNaN(principal)) {
-        document.getElementById("principal").value = NumberWithCommas(parseFloat(principal).toFixed(2));
-    }
-};
-
-var fmtPayment = function () {
-    var payment = document.getElementById("payment").value;
-    if (typeof(payment) !== "undefined" && payment !== null && payment !== "" && !isNaN(payment)) {
-        document.getElementById("payment").value = NumberWithCommas(parseFloat(payment).toFixed(2));
-    }
-};
-
-var fmtTotal = function () {
-    var total = document.getElementById("total").value;
-    if (typeof(total) !== "undefined" && total !== null && total !== "" && !isNaN(total)) {
-        document.getElementById("total").value = NumberWithCommas(parseFloat(total).toFixed(2));
-    }
-};
-
-var fmtTotInt = function () {
-    var totalInt = document.getElementById("interest-total").value;
-    if (typeof(totalInt) !== "undefined" && totalInt !== null && totalInt !== "" && !isNaN(totalInt)) {
-        document.getElementById("interest-total").value = NumberWithCommas(parseFloat(totalInt).toFixed(2));
-    }
-};
-
-
 function GetPeriodIndicator(){
     return document.getElementById("period_type").value;
 }
@@ -119,11 +89,8 @@ var saveScenario = function (event) {
             if(typeof(sScenarioName.value) === "undefined" || 
                sScenarioName.value === null || 
                sScenarioName.value === "" || sScenarioName === " "){
-//                addClass(sScenarioName, "inError");
                 showHideError(sScenarioName.id,"Scenario name cannot be blank.");
                 return;
-//            }else{
-//                removeClass(sScenarioName, 'inError');
             }
             // attempt to add the records to firebase
 
@@ -236,19 +203,19 @@ var newScenario = function(event){
  };
 
 var btnAmortize = function (event){
-    var nPrincipal = document.getElementById('principal').value;
-    nPrincipal = nPrincipal.replace( /,/g, "" );
-    nPrincipal = parseFloat(nPrincipal);
-    var nPayment = document.getElementById('payment').value;
-    nPayment = nPayment.replace( /,/g, "" );
-    nPayment = parseFloat(nPayment);
-    var nRate = document.getElementById('rate').value;
-    nRate = nRate.replace( /,/g, "" );
-    nRate = parseFloat(nRate);
+    var principal = document.getElementById('principal').value;
+    principal = principal.replace( /,/g, "" );
+    principal = parseFloat(principal);
+    var payment = document.getElementById('payment').value;
+    payment = payment.replace( /,/g, "" );
+    payment = parseFloat(payment);
+    var rate = document.getElementById('rate').value;
+    rate = rate.replace( /,/g, "" );
+    rate = parseFloat(rate);
     var period = calcPeriodsPerYear();
-    var nPdRate = (nRate * .01)/period;
+    var pdRate = (rate * .01)/period;
 
-    AmortizeLoan(nPrincipal, nPayment, nRate, nPdRate);
+    AmortizeLoan(principal, payment, rate, pdRate);
     
     document.getElementById("loan-amt").textContent=document.getElementById('principal').value;
 };
@@ -276,20 +243,26 @@ function numberPad(item){
 }
 
 function makeText(item){
+    
+    // make the input a text type
     item.setAttribute("type", "text");
     if (item.value === "" ||  item.value === " "){
         item.value = "";
         return;
     }
+
+    // configure the input for proper display
+    item.value.replace( /,/g, "" ); // strip commas first -- might have been user input
     if(item.id === 'rate')
         item.value = NumberWithCommas(parseFloat(item.value).toFixed(3));
-    else if (item.id !== 'term')
+    else if (item.id !== 'periods')
         item.value = NumberWithCommas(parseFloat(item.value).toFixed(2));
     else
         item.value = parseInt(item.value);
 }
 
 function focus(){
+    // loop through all number fields and attach an onfocus and onblur event
     var arr = Array.prototype.slice.call(document.getElementsByClassName("number"));
 
     arr.forEach(function (item) {
@@ -308,10 +281,6 @@ var init = function(event){
 
     document.getElementById("amortButton").addEventListener('click', btnAmortize);
     document.getElementById("amort-cancel").addEventListener('click', btnAmortCancel);
-    
-    document.getElementById("principal").addEventListener('change', fmtPrinc);
-    document.getElementById("total").addEventListener('change', fmtTotal);
-    document.getElementById("interest-total").addEventListener('change', fmtTotInt);
     
     focus();
 }

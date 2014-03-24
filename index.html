@@ -44,12 +44,13 @@
                 <form id="loans" name="loan-calc">
                     <fieldset>
                         <div class="col-md-6">
+                            <!-- scenario name -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="scenario-name" id="scenario-name-label">Scenario Name</label>
                                     <input class="field" type="text" id="scenario-name" placeholder="Scenario Name"  size="15">
                                 <div class="error">This is my error</div>
                             </div>
-
+                            <!-- loan type -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="loan-type" id="loan-type-label">Loan Type</label>
                                     <select name="loan-type" id="loan-type" class="field" autofocus>
@@ -59,23 +60,25 @@
                                     </select>
                                 <div class="error">This is my error</div>
                             </div>
-
+                            <!-- loan amount -->
                             <div class="input-group">
-                                <label class="fieldlabel" for="principal" id="principal-label">Principal</label>
+                                <label class="fieldlabel" for="principal" id="principal-label">Loan Amount</label>
                                     <input class="field required number" type="text" id="principal" placeholder="Loan Amount">
                                 <div class="error">This is my error</div>
                             </div>
-
+                            <!-- interest rate -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="rate" id="rate-label">Rate</label>
                                     <input class="field required number" type="text" id="rate" placeholder="Rate">
                                 <div class="error">This is my error</div>
                             </div>
+                            <!-- periods/term -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="periods" id="periods-label">Periods</label>
                                     <input class="field required number" type="text" id="periods" placeholder="Term">
                                 <div class="error">This is my error</div>
                             </div>
+                            <!-- period type -->
                             <div class="input-group">
                                 <label for="period-type" id="for-label" class="fieldlabel">for</label>
                                     <select name="period-id" id="period-type" class="field">
@@ -88,19 +91,19 @@
 
                         </div>
                         <div class="col-md-6">
-
+                            <!-- payment label -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="payment" id="payment-label">Payment</label>
                                     <input class="field required number" type="text" id="payment" placeholder="Payment">
                                 <div class="error">This is my error</div>
                             </div>
-
+                            <!-- total loan -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="total" id="total-label">Total</label>
                                     <input class="field" type="text" id="total" size="15" disabled value="0.00"><br/>
                                 <div class="error">This is my error</div>
                             </div>
-
+                            <!-- total interest -->
                             <div class="input-group">
                                 <label class="fieldlabel" for="interest-total" id="interest-total-label">Total Interest</label>
                                     <input class="field" type="text" id="interest-total" size="15" disabled value="0.00">
