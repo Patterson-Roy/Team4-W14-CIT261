@@ -1,8 +1,3 @@
-function GetPeriodIndicator(){
-    return document.getElementById("period_type").value;
-}
-
-
 function NumberWithCommas(x) {
     var parts = x.toString().split("."); // split the number on the decimal
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); // insert the commas
@@ -17,11 +12,6 @@ function ValidateEmail(mail){
     }
     return false;
 } 
-
-
-function hasClass(el, name) {
-   return new RegExp('(\\s|^)'+name+'(\\s|$)').test(el.className);
-}
 
 function addClass(el, name){
     // remove all instances of the class first
@@ -42,7 +32,8 @@ function removeClass(el, name)
 function GetUserID (){
     try{
         return localStorage.getItem('nerdherdcalc-userid');
-    }catch(exception){
+    }catch(e){
+        console.log(e.message);
         return null;
     }
 };
@@ -89,7 +80,7 @@ var saveScenario = function (event) {
             if(typeof(sScenarioName.value) === "undefined" || 
                sScenarioName.value === null || 
                sScenarioName.value === "" || sScenarioName === " "){
-                showHideError(sScenarioName.id,"Scenario name cannot be blank.");
+                showHideError(sScenarioName.id,"Enter a Scenario Name.");
                 return;
             }
             // attempt to add the records to firebase
@@ -103,7 +94,8 @@ var saveScenario = function (event) {
 
             removeClass(document.getElementById("amortButton"), "hide-me");
         }
-    }catch( exception ){
+    }catch(e){
+        console.log(e.message);
     }
     return;
 };
@@ -128,7 +120,8 @@ function LoadScenario(key){
         removeClass(document.getElementById("amortButton"), "hide-me");
 
     
-    }catch(exception){
+    }catch(e){
+        console.log(e.message);
     }
 }
 
@@ -155,43 +148,36 @@ var btnScenario = function(event) {
         // click the close button on the scenario list
         
         document.getElementById("close-modal").click();
-        
-        removeClass(document.getElementById("scenario-name"), "inError");
-        
+
         // get the button key 
         var key = event.target.keyValue;
 
         LoadScenario(key);
-    }catch(exception){
-        console.log(exception);
+    }catch(e){
+        console.log(e.message);
     }
 };
 
 
 var newScenario = function(event){
+    // clear the input values and get ready for new scenario
     event.preventDefault();
-    var sClass = 'inError';
-    document.getElementById("scenario-name").value = "";
-    removeClass(document.getElementById("scenario-name"),sClass);
+    hideAllErrors();
+    var arr = Array.prototype.slice.call(document.getElementsByTagName("input"));
+    
+    arr.forEach(function (item){
+        item.value="";
+    });
+    
+    
     document.getElementById("loan-type").value = "car"; // car, home, other
-    removeClass(document.getElementById("loan-type"),sClass);
-    document.getElementById("rate").value = "";
-    removeClass(document.getElementById("rate"),sClass);
-    document.getElementById("principal").value = "";
-    removeClass(document.getElementById("principal"),sClass);
-    document.getElementById("periods").value = "";
-    removeClass(document.getElementById("periods"),sClass);
     document.getElementById("period-type").value = "mo"; // month, quarter, year
-    removeClass(document.getElementById("period-type"),sClass);
-    document.getElementById("payment").value = "";
-    removeClass(document.getElementById("payment"),sClass);
-
-    document.getElementById("total").value = "";
-    document.getElementById("interest-total").value = "";
     
     addClass(document.getElementById("amortButton"), "hide-me");
 
 };
+
+
  var btnGo = function(event){
      event.preventDefault();
      hideAllErrors();
@@ -227,7 +213,7 @@ var btnAmortCancel = function (event){
 };
 
 function numberPad(item){
-
+    // make the input type a number so trigger the number pad on mobile device
     if (item.value === "" ||  item.value === " "){
         item.value = "";
     }else{
@@ -244,7 +230,7 @@ function numberPad(item){
 
 function makeText(item){
     
-    // make the input a text type
+    // make the input a text type so it can be formatted as needed.
     item.setAttribute("type", "text");
     if (item.value === "" ||  item.value === " "){
         item.value = "";
