@@ -267,7 +267,7 @@ console.log(item.id, item.type, item.value);
         item.value = parseFloat(item.value.replace( /,/g, "" ));
     }
     
-    item.setAttribute("type", "number");
+//    item.setAttribute("type", "number");
 }
 
 function makeText(item){
@@ -284,7 +284,14 @@ function makeText(item){
         item.value = parseInt(item.value);
 }
 
+function focus(){
+    var arr = Array.prototype.slice.call(document.getElementsByClassName("number"));
 
+    arr.forEach(function (item) {
+        item.setAttribute('onfocus', "numberPad(this)");
+        item.setAttribute('onblur', "makeText(this)");
+    });
+}
 
 var init = function(event){
     document.getElementById("saveButton").addEventListener('click', saveScenario);
@@ -301,12 +308,6 @@ var init = function(event){
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
     
-//    var arr = Array.prototype.slice.call(document.getElementsByClassName("number"));
-//
-//    arr.forEach(function (item) {
-//        item.setAttribute('onfocus', "numberPad(this)");
-//        item.setAttribute('onblur', "makeText(this)");
-//    });
 }
 
 document.addEventListener("DOMContentLoaded",init);
