@@ -260,14 +260,19 @@ var btnAmortCancel = function (event){
 };
 
 function numberPad(item){
-console.log(item.id, item.type, item.value);
+
+    if (item.value === "" ||  item.value === " "){
+        item.value = "";
+        return;
+    }
+
     if(item.id === 'term'){
         item.value = parseInt(item.value.replace( /,/g, "" ));
     }else{
         item.value = parseFloat(item.value.replace( /,/g, "" ));
     }
     
-//    item.setAttribute("type", "number");
+    item.setAttribute("type", "number");
 }
 
 function makeText(item){
@@ -308,6 +313,7 @@ var init = function(event){
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
     
+    focus();
 }
 
 document.addEventListener("DOMContentLoaded",init);
