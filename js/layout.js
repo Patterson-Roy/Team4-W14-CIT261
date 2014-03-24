@@ -295,5 +295,5 @@ function toggleTestingTools ()
 };
 
 // Event listeners
-document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("images/icons/cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
+//document.getElementById("btn-add-scenario").addEventListener("click", function () { addScenario("images/icons/cash.png", guid() , "Auto", "$3,000.00", "4.65%", guid() ) });
 document.getElementById("show-btn").addEventListener("click", function() { toggleTestingTools() });
