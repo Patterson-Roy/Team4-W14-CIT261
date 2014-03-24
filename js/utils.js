@@ -260,6 +260,7 @@ var btnAmortCancel = function (event){
 };
 
 function numberPad(item){
+console.log(item.id, item.type, item.value);
     if(item.id === 'term'){
         item.value = parseInt(item.value.replace( /,/g, "" ));
     }else{
