@@ -301,12 +301,12 @@ var init = function(event){
     document.getElementById("total").addEventListener('change', fmtTotal);
     document.getElementById("interest-total").addEventListener('change', fmtTotInt);
     
-    var arr = Array.prototype.slice.call(document.getElementsByClassName("number"));
-
-    arr.forEach(function (item) {
-        item.setAttribute('onfocus', "numberPad(this)");
-        item.setAttribute('onblur', "makeText(this)");
-    });
+//    var arr = Array.prototype.slice.call(document.getElementsByClassName("number"));
+//
+//    arr.forEach(function (item) {
+//        item.setAttribute('onfocus', "numberPad(this)");
+//        item.setAttribute('onblur', "makeText(this)");
+//    });
 }
 
 document.addEventListener("DOMContentLoaded",init);
