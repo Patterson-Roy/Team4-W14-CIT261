@@ -240,7 +240,6 @@ function numberPad(item){
     }
     
     item.setAttribute("type", "number");
-    document.getElementById('typetype').textContent = item.type;
 }
 
 function makeText(item){
@@ -261,7 +260,6 @@ function makeText(item){
             item.value = parseInt(item.value);
     }
 
-    document.getElementById('typetype').textContent = item.type;
 }
 
 function focus(){
