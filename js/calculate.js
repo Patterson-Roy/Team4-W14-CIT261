@@ -45,6 +45,8 @@ function CalcPrincipal(rate, periods, ppy, payment) {
     loanInt = parseFloat(loanInt);
 
     document.getElementById("principal").value = NumberWithCommas(totalPrincipal.toFixed(2));
+    // reformat the rate
+    document.getElementById('rate').value = NumberWithCommas(parseFloat(rate * 100).toFixed(3));
     document.getElementById('total').value = NumberWithCommas(loanTotal.toFixed(2));
     document.getElementById('interest-total').value = NumberWithCommas(loanInt.toFixed(2));
     return;
@@ -69,8 +71,9 @@ function CalcPayment(principal, rate, periods, ppy) {
 
     // reformat the principal
     // string any commas first, then reformat for display
-    document.getElementById("principal").value = document.getElementById("principal").value.replace(/,/g, "");
-    document.getElementById("principal").value = NumberWithCommas(parseFloat(document.getElementById("principal").value).toFixed(2));
+    document.getElementById("principal").value = NumberWithCommas(parseFloat(principal).toFixed(2));
+    // reformat the rate
+    document.getElementById('rate').value = NumberWithCommas(parseFloat(rate * 100).toFixed(3));
     
     document.getElementById('total').value = NumberWithCommas(loanTotal.toFixed(2));
     document.getElementById('interest-total').value = NumberWithCommas(loanInt.toFixed(2));
@@ -95,8 +98,9 @@ function CalcPeriods(principal, rate, ppy, payment) {
 
     // reformat the principal
     // string any commas first, then reformat for display
-    document.getElementById("principal").value = document.getElementById("principal").value.replace(/,/g, "");
-    document.getElementById("principal").value = NumberWithCommas(parseFloat(document.getElementById("principal").value).toFixed(2));
+    document.getElementById("principal").value = NumberWithCommas(parseFloat(principal).toFixed(2));
+    // reformat the rate
+    document.getElementById('rate').value = NumberWithCommas(parseFloat(rate * 100).toFixed(3));
     
     document.getElementById('total').value = NumberWithCommas(loanTotal.toFixed(2));
     document.getElementById('interest-total').value = NumberWithCommas(loanInt.toFixed(2));
@@ -117,15 +121,14 @@ function CalcRate(principal, payment, ppy, periods) {
         //Calculate principal plus interest giving loan total and loan interest total
     var loanTotal = payment * periods;
     loanTotal = parseFloat(loanTotal);
-    var loanInt = totalInt - principal;
+    var loanInt = loanTotal - principal;
     loanInt = parseFloat(loanInt);
     
     document.getElementById("rate").value = NumberWithCommas(parseFloat(rate.toFixed(3)));
 
     // reformat the principal
     // string any commas first, then reformat for display
-    document.getElementById("principal").value = document.getElementById("principal").value.replace(/,/g, "");
-    document.getElementById("principal").value = NumberWithCommas(parseFloat(document.getElementById("principal").value).toFixed(2));
+    document.getElementById("principal").value = NumberWithCommas(parseFloat(principal).toFixed(2));
     
     document.getElementById('total').value = NumberWithCommas(loanTotal.toFixed(2));
     document.getElementById('interest-total').value = NumberWithCommas(loanInt.toFixed(2));

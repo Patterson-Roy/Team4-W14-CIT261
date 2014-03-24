@@ -230,16 +230,17 @@ function numberPad(item){
 
     if (item.value === "" ||  item.value === " "){
         item.value = "";
-        return;
-    }
-
-    if(item.id === 'term'){
-        item.value = parseInt(item.value.replace( /,/g, "" ));
     }else{
-        item.value = parseFloat(item.value.replace( /,/g, "" ));
+
+        if(item.id === 'term'){
+            item.value = parseInt(item.value.replace( /,/g, "" ));
+        }else{
+            item.value = parseFloat(item.value.replace( /,/g, "" ));
+        }
     }
     
     item.setAttribute("type", "number");
+    document.getElementById('typetype').textContent = item.type;
 }
 
 function makeText(item){
@@ -248,17 +249,19 @@ function makeText(item){
     item.setAttribute("type", "text");
     if (item.value === "" ||  item.value === " "){
         item.value = "";
-        return;
+    }else{
+
+        // configure the input for proper display
+        item.value.replace( /,/g, "" ); // strip commas first -- might have been user input
+        if(item.id === 'rate')
+            item.value = NumberWithCommas(parseFloat(item.value).toFixed(3));
+        else if (item.id !== 'periods')
+            item.value = NumberWithCommas(parseFloat(item.value).toFixed(2));
+        else
+            item.value = parseInt(item.value);
     }
 
-    // configure the input for proper display
-    item.value.replace( /,/g, "" ); // strip commas first -- might have been user input
-    if(item.id === 'rate')
-        item.value = NumberWithCommas(parseFloat(item.value).toFixed(3));
-    else if (item.id !== 'periods')
-        item.value = NumberWithCommas(parseFloat(item.value).toFixed(2));
-    else
-        item.value = parseInt(item.value);
+    document.getElementById('typetype').textContent = item.type;
 }
 
 function focus(){
