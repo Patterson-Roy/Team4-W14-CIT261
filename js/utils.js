@@ -113,7 +113,7 @@ function LoadScenario(key){
         document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
         document.getElementById("periods").value = parseInt(data.term);
         document.getElementById("period-type").value = data.periodtype; // month, quarter, year
-        document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
+        document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2)); 
         document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
         document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
         
