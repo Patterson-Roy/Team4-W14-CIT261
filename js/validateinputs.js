@@ -50,17 +50,5 @@ function validateInputs() {
         }
     }
                 return true;
-    
-//    arr.forEach(function(item,index){
-//        item.value = parseFloat(item.value.replace( /,/g, "" )); // strip any commas
-//        if(!typeof(item.value) === "number" || item.value < 0 ){
-//            alert("Please enter correct integer values.");
-//            return false;
-//        }
-//        else{
-//            item.value = NumberWithCommas(item.value);
-//            return true;
-//        }
-//    });
 }
 
