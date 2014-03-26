@@ -2,7 +2,7 @@ function Calculate () {
     var principal = parseFloat(document.getElementById('principal').value.replace( /,/g, "" ));
     var payment = parseFloat(document.getElementById('payment').value.replace( /,/g, "" ));
     var rate = parseFloat(document.getElementById('rate').value.replace( /,/g, "" ));
-    var term = parseInt(document.getElementById('term').value.replace( /,/g, "" ));
+    var term = parseInt(document.getElementById('periods').value.replace( /,/g, "" ));
     var data = {};
 
 
@@ -31,7 +31,7 @@ function Calculate () {
         document.getElementById("principal").value = NumberWithCommas(data.principal.toFixed(2));
         document.getElementById("payment").value = NumberWithCommas(data.payment.toFixed(2));
         document.getElementById("rate").value = NumberWithCommas(data.rate.toFixed(3));
-        document.getElementById("term").value = data.term;
+        document.getElementById("periods").value = data.term;
         
         document.getElementById("total").value=NumberWithCommas(data.total.toFixed(2));
         document.getElementById("interest-total").value=NumberWithCommas(data.totalInt.toFixed(2));
