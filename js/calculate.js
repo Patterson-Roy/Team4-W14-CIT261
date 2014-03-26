@@ -15,7 +15,7 @@ function Calculate () {
                     data = CalcPayment(principal, rate, term);
                     break;
                 
-                case "term":
+                case "periods":
                     data = CalcTerm(principal, rate, payment);
                     break;
                 
