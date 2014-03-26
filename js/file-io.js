@@ -35,6 +35,8 @@ function addRecords () {
         data.total = fTotal.replace(/,/g,""); // strip any commas
         data.totalinterest = fTotalInterest.replace( /,/g, "" ); // strip any commas;
 
+        reFormat(data);
+
         // prep the Ajax call to firebase
         xhtmlreq.open("PUT","https://blistering-fire-7540.firebaseio.com/" + window.btoa(sUserID) + "/" + window.btoa(sScenarioName) + "/" + sLoanType + ".json",true);
         xhtmlreq.setRequestHeader("Content-Type", "application/json");
@@ -42,6 +44,7 @@ function addRecords () {
 
         // save data for session storage
         sessionStorage.setItem(sScenarioName + "|" + sLoanType,JSON.stringify(data));
+        
         return true;
     }catch(exception){
         return false;

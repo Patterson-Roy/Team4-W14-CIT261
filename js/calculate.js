@@ -6,43 +6,28 @@ function Calculate () {
     var data = {};
 
 
-        switch (this.whatToCalculate){
-                case "principal":
-                    data = CalcPrincipal(payment, rate, term);
-                    break;
-                
-                case "payment":
-                    data = CalcPayment(principal, rate, term);
-                    break;
-                
-                case "periods":
-                    data = CalcTerm(principal, rate, payment);
-                    break;
-                
-                case "rate":
-                    data = CalcRate(principal, payment, term);
-                    break;
-                
-                default:
-                    break;
-        }
-        
+    switch (this.whatToCalculate){
+            case "principal":
+                data = CalcPrincipal(payment, rate, term);
+                break;
 
-        document.getElementById("principal").value = NumberWithCommas(data.principal.toFixed(2));
-        document.getElementById("payment").value = NumberWithCommas(data.payment.toFixed(2));
-        document.getElementById("rate").value = NumberWithCommas(data.rate.toFixed(3));
-        document.getElementById("periods").value = data.term;
-        
-        document.getElementById("total").value=NumberWithCommas(data.total.toFixed(2));
-        document.getElementById("interest-total").value=NumberWithCommas(data.totalInt.toFixed(2));
+            case "payment":
+                data = CalcPayment(principal, rate, term);
+                break;
 
-        if(document.getElementById('principal').value != undefined && document.getElementById('principal').value > "0" &&
-                document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0" &&
-                document.getElementById('rate').value != undefined && document.getElementById('rate').value > "0"){
-            
-            document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
-            removeClass(document.getElementById("amortizeButton"), "hide-me");
-        }
+            case "periods":
+                data = CalcTerm(principal, rate, payment);
+                break;
+
+            case "rate":
+                data = CalcRate(principal, payment, term);
+                break;
+
+            default:
+                break;
+    }
+        
+    reFormat(data);
 }
 
 function CalcPrincipal (payment, rate, term) {
@@ -57,7 +42,7 @@ function CalcPrincipal (payment, rate, term) {
     data.payment = parseFloat(payment);
     
     data.total = payment * term;
-    data.totalInt = data.total - data.principal;
+    data.totalinterest = data.total - data.principal;
 
     return data;
 }
@@ -74,7 +59,7 @@ function CalcPayment (principal, rate, term) {
     data.term = term;
     data.payment = (principal * periodInterest * Math.pow((1+periodInterest),term))/(Math.pow((1+periodInterest),term)-1);
     data.total = data.payment * term;
-    data.totalInt = data.total - principal;
+    data.totalinterest = data.total - principal;
     
     return data ;
     
@@ -95,7 +80,7 @@ function CalcTerm (principal, rate, payment) {
     data.term = term;
     data.payment = payment;
     data.total = payment * term;
-    data.totalInt = data.total - principal;
+    data.totalinterest = data.total - principal;
 
     return data;
 }
@@ -136,7 +121,7 @@ Where,
     data.term = term;
     
     data.total = payment * term;
-    data.totalInt = data.total - principal;
+    data.totalinterest = data.total - principal;
     
     return data;
 }

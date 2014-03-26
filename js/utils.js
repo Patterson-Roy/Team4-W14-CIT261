@@ -183,7 +183,15 @@ var newScenario = function(event){
      hideAllErrors();
     if(CheckValues() && validateInputs()){
         Calculate();
-        removeClass(document.getElementById("amortButton"), "hide-me");
+
+        if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
+                document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
+                document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
+                document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
+            
+            document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
+            removeClass(document.getElementById("amortButton"), "hide-me");
+        }
     }
      
  };
@@ -198,10 +206,13 @@ var btnAmortize = function (event){
     var rate = document.getElementById('rate').value;
     rate = rate.replace( /,/g, "" );
     rate = parseFloat(rate);
-    var period = calcPeriodsPerYear();
-    var pdRate = (rate * .01)/period;
-
-    AmortizeLoan(principal, payment, rate, pdRate);
+    var pdRate = (rate * .01)/getPeriodsPerYear();
+    var iTerm = document.getElementById("periods").value.replace( /,/g, "" );
+    
+    // requires the values to work amortization
+    if(principal>0 && payment > 0 && rate > 0, pdRate > 0){
+        AmortizeLoan(principal, payment, rate, pdRate, iTerm);
+    }
     
     document.getElementById("loan-amt").textContent=document.getElementById('principal').value;
 };
@@ -247,6 +258,19 @@ function makeText(item){
     }
 
 }
+
+function reFormat(data){
+    
+        document.getElementById("principal").value = NumberWithCommas(parseFloat(data.principal).toFixed(2));
+        document.getElementById("payment").value = NumberWithCommas(parseFloat(data.payment).toFixed(2));
+        document.getElementById("rate").value = NumberWithCommas(parseFloat(data.rate).toFixed(3));
+        document.getElementById("periods").value = NumberWithCommas(parseInt(data.term));
+        
+        document.getElementById("total").value=NumberWithCommas(parseFloat(data.total).toFixed(2));
+        document.getElementById("interest-total").value=NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
+
+}
+
 
 function focus(){
     // loop through all number fields and attach an onfocus and onblur event
