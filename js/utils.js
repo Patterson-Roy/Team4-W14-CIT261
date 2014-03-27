@@ -90,9 +90,11 @@ var saveScenario = function (event) {
             }
 
             // send informational message to user that scenario was saved.
-            createMessage(sScenarioName.value + " was saved.", 1)
+            createMessage(sScenarioName.value + " was saved.", 1);
+            
+            
 
-            removeClass(document.getElementById("amortButton"), "hide-me");
+        ShowAmortizationButton();
         }
     }catch(e){
         console.log(e.message);
@@ -117,7 +119,7 @@ function LoadScenario(key){
         document.getElementById("total").value = NumberWithCommas(parseFloat(data.total).toFixed(2));
         document.getElementById("interest-total").value = NumberWithCommas(parseFloat(data.totalinterest).toFixed(2));
         
-        removeClass(document.getElementById("amortButton"), "hide-me");
+        ShowAmortizationButton();
 
         // send informational message to user that scenario was deleted.
         createMessage(arrMyArr[0] + " is loaded.", 1)
@@ -185,18 +187,37 @@ var newScenario = function(event){
      hideAllErrors();
     if(CheckValues() && validateInputs()){
         Calculate();
-
-        if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
-                document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
-                document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
-                document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
-            
-            document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
-            removeClass(document.getElementById("amortButton"), "hide-me");
-        }
+        ShowAmortizationButton();
+//
+//        if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
+//                document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
+//                document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
+//                document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
+//            
+//            document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
+//            removeClass(document.getElementById("amortButton"), "hide-me");
+//        }
     }
      
  };
+
+function ShowAmortizationButton(){
+    
+console.log("payment: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
+console.log("principal: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
+console.log("rate: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
+console.log("periods: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
+    
+    if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
+            document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
+            document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
+            document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
+
+        document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
+        removeClass(document.getElementById("amortButton"), "hide-me");
+    }
+    
+}
 
 var btnAmortize = function (event){
     var principal = document.getElementById('principal').value;
