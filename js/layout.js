@@ -258,6 +258,9 @@ function hideAllErrors () {
         }
     }
     
+    // add code to remove the system message
+    
+    
 }
 
 /// utility functions
