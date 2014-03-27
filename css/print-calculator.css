@@ -56,3 +56,6 @@ td{
     text-align: right;
 }
 
+.no-print {
+    display: none;
+}
