@@ -96,14 +96,15 @@ function removeScenarioByID( uniqueID )
         return;
     }
     
-    var key = selElement.keyValue;
-    var arr = [];
-    arr = key.split("|");
+    var arrKey = selElement.keyValue.split("|");
     
-    DeleteFirebaseRecs(arr[0],arr[1]);
+    DeleteFirebaseRecs(arrKey[0],arrKey[1]);
     
     
     selElement.remove();
+
+    // send informational message to user that scenario was deleted.
+    createMessage(arrKey[0] + " was deleted.", 1)
 
 }
 

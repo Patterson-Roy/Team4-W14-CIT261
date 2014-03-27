@@ -119,6 +119,8 @@ function LoadScenario(key){
         
         removeClass(document.getElementById("amortButton"), "hide-me");
 
+        // send informational message to user that scenario was deleted.
+        createMessage(arrMyArr[0] + " is loaded.", 1)
     
     }catch(e){
         console.log(e.message);
