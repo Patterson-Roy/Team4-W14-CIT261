@@ -7,7 +7,10 @@ function CheckValues (saveFlag){
     
     arr.forEach(function(item,index){
         item.value = item.value.replace( /,/g, "" ); // strip any commas
-        if(typeof(item.value) === "undefined" || item.value === "" || item.value == "0" || item.value == null){
+        if(typeof(item.value) === "undefined" || 
+           item.value === "" || item.value === " " ||
+           item.value == "0" || item.value == "0.00" || item.value == "0.000" || 
+           item.value == null){
             count++;
             sID = item.id;
         }
