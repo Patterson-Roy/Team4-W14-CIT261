@@ -188,26 +188,11 @@ var newScenario = function(event){
     if(CheckValues() && validateInputs()){
         Calculate();
         ShowAmortizationButton();
-//
-//        if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
-//                document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
-//                document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
-//                document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
-//            
-//            document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
-//            removeClass(document.getElementById("amortButton"), "hide-me");
-//        }
     }
      
  };
 
 function ShowAmortizationButton(){
-    
-console.log("payment: ", document.getElementById('payment').value != undefined , document.getElementById('payment').value > "0");
-console.log("principal: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-console.log("rate: ", document.getElementById('rate').value != undefined , document.getElementById('rate').value > "0");
-console.log("periods: ", document.getElementById('periods').value != undefined , document.getElementById('periods').value > "0");
-    
     if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0.00" &&
             document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0.00"    &&
             document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0.000"      &&
