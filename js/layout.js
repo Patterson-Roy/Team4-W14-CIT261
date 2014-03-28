@@ -245,10 +245,10 @@ function showHideError (elemID, errorMsg) {
     
 }
 
-function hideAllErrors () {
+function hideAllErrors() {
     // set the message
     var inputGroup = document.getElementsByClassName('input-group');
-
+    var msgGroup = document.getElementById('msg-area');
     // alert (children.length);
 
     for(var i=0; i < inputGroup.length; i++)
@@ -258,10 +258,8 @@ function hideAllErrors () {
             inputGroup[i].classList.remove('error');
         }
     }
-    
     // add code to remove the system message
-    
-    
+    while ( msgGroup.firstChild ) msgGroup.removeChild( msgGroup.firstChild );
 }
 
 /// utility functions
