@@ -203,14 +203,14 @@ var newScenario = function(event){
 
 function ShowAmortizationButton(){
     
-console.log("payment: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
+console.log("payment: ", document.getElementById('payment').value != undefined , document.getElementById('payment').value > "0");
 console.log("principal: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-console.log("rate: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-console.log("periods: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
+console.log("rate: ", document.getElementById('rate').value != undefined , document.getElementById('rate').value > "0");
+console.log("periods: ", document.getElementById('periods').value != undefined , document.getElementById('periods').value > "0");
     
-    if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
-            document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
-            document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
+    if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0.00" &&
+            document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0.00"    &&
+            document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0.000"      &&
             document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
 
         document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
