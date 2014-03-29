@@ -122,7 +122,7 @@ function LoadScenario(key){
         ShowAmortizationButton();
 
         // send informational message to user that scenario was deleted.
-        createMessage(arrMyArr[0] + " is loaded.", 1)
+        createMessage(arrMyArr[0] + " is loaded.", 1);
     
     }catch(e){
         console.log(e.message);
@@ -220,6 +220,10 @@ var btnAmortize = function (event){
     // requires the values to work amortization
     if(principal>0 && payment > 0 && rate > 0, pdRate > 0){
         AmortizeLoan(principal, payment, rate, pdRate, iTerm);
+    }else{
+        // send warning message to user that scenario was deleted.
+        createMessage("Insufficient data for amortization.  Button is removed.", 2);
+        addClass(document.getElementById("amortButton"), "hide-me");
     }
     
     document.getElementById("loan-amt").textContent=document.getElementById('principal').value;
