@@ -218,7 +218,7 @@ var btnAmortize = function (event){
     var iTerm = document.getElementById("periods").value.replace( /,/g, "" );
     
     // requires the values to work amortization
-    if(principal>0 && payment > 0 && rate > 0, pdRate > 0){
+    if(principal>0 && payment > 0 && rate > 0 && pdRate > 0 && iTerm > 0){
         AmortizeLoan(principal, payment, rate, pdRate, iTerm);
     }else{
         // send warning message to user that scenario was deleted.
