@@ -39,6 +39,7 @@ function CheckValues (saveFlag){
 }
 
 function validateInputs() {
+    var counter = 0;
     var arr = [];
     arr = Array.prototype.slice.call(document.getElementsByClassName("required"));
     for(var i = 0; i < arr.length; i++){
@@ -46,12 +47,18 @@ function validateInputs() {
         arr[i].value = Number(arr[i].value);
         if(isNaN(arr[i].value) || arr[i].value < 0){
             var message = "Please enter a positive number.";
-            showHideError(arr[i].id, message);    
-                return false;
+            showHideError(arr[i].id, message);
+            counter++;
         }else{
-        continue;
+            continue;
         }
     }
-                return true;
+
+    // if no errors, then return true, otherwise, return false.
+    if(counter === 0){
+        return true;
+    }else{
+        return false;
+    }
 }
 
