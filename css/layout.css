@@ -102,6 +102,35 @@ body {
     cursor: pointer;
 }
 
+@media only screen 
+and (max-width : 710px) {
+    .action-buttons {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .action-buttons button {
+        min-width: 125px;
+        margin-bottom: 20px;
+        padding: 10px;
+        
+    }
+}
+
+@media only screen 
+and (min-width : 711px) {
+    .action-buttons {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .action-buttons button {
+        min-width: 125px;
+        padding: 10px;
+    }
+}
+
+
 /* test nav */
 
 #show-btn {
