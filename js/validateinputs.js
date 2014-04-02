@@ -45,7 +45,7 @@ function validateInputs() {
         arr[i].value = arr[i].value.replace( /,/g, "" )
         arr[i].value = Number(arr[i].value);
         if(isNaN(arr[i].value) || arr[i].value < 0){
-            var message = "Please enter a positive.";
+            var message = "Please enter a positive number.";
             showHideError(arr[i].id, message);    
                 return false;
         }else{
