@@ -122,7 +122,7 @@ function LoadScenario(key){
         ShowAmortizationButton();
 
         // send informational message to user that scenario was deleted.
-        createMessage(arrMyArr[0] + " is loaded.", 1)
+        createMessage(arrMyArr[0] + " is loaded.", 1);
     
     }catch(e){
         console.log(e.message);
@@ -188,29 +188,14 @@ var newScenario = function(event){
     if(CheckValues() && validateInputs()){
         Calculate();
         ShowAmortizationButton();
-//
-//        if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
-//                document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
-//                document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
-//                document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
-//            
-//            document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
-//            removeClass(document.getElementById("amortButton"), "hide-me");
-//        }
     }
      
  };
 
 function ShowAmortizationButton(){
-    
-console.log("payment: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-console.log("principal: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-console.log("rate: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-console.log("periods: ", document.getElementById('principal').value != undefined , document.getElementById('principal').value > "0");
-    
-    if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0" &&
-            document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0"    &&
-            document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0"      &&
+    if(document.getElementById('principal').value != undefined    && document.getElementById('principal').value > "0.00" &&
+            document.getElementById('payment').value != undefined && document.getElementById('payment').value >"0.00"    &&
+            document.getElementById('rate').value != undefined    && document.getElementById('rate').value > "0.000"      &&
             document.getElementById('periods').value != undefined && document.getElementById('periods').value > "0"){
 
         document.getElementById('loan-amt').textContent = document.getElementById('principal').value;
@@ -233,8 +218,12 @@ var btnAmortize = function (event){
     var iTerm = document.getElementById("periods").value.replace( /,/g, "" );
     
     // requires the values to work amortization
-    if(principal>0 && payment > 0 && rate > 0, pdRate > 0){
+    if(principal>0 && payment > 0 && rate > 0 && pdRate > 0 && iTerm > 0){
         AmortizeLoan(principal, payment, rate, pdRate, iTerm);
+    }else{
+        // send warning message to user that scenario was deleted.
+        createMessage("Insufficient data for amortization.  Button is removed.", 2);
+        addClass(document.getElementById("amortButton"), "hide-me");
     }
     
     document.getElementById("loan-amt").textContent=document.getElementById('principal').value;
