@@ -19,6 +19,7 @@ body {
 
 #scenario-list {
     padding: 0px;
+    overflow-x: hidden;
 }
 
 .scenario-item {
