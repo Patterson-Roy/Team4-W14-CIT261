@@ -102,6 +102,16 @@ body {
     cursor: pointer;
 }
 
+#top-header {
+    background: #212020;
+    color: #fff;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 1000;
+}
+
 @media only screen 
 and (max-width : 710px) {
     .action-buttons {
@@ -120,14 +130,7 @@ and (max-width : 710px) {
         position: absolute;
         top: 0px;
         left: 0px;
-        background: #000;
         width: 100%;
-        color: #fff;
-        padding: 10px;
-        padding-left: 30px;
-        font-size: 1.5em;
-        font-weight: bold;
-        z-index: 1000;
     }
 
     body {
@@ -151,14 +154,7 @@ and (min-width : 711px) {
         position: fixed;
         top: 0px;
         left: 0px;
-        background: #000;
         width: 96%;
-        color: #fff;
-        padding: 10px;
-        padding-left: 30px;
-        font-size: 1.5em;
-        font-weight: bold;
-        z-index: 1000;
         margin-left: 2%;
         
         border-bottom-left-radius: 10px;
